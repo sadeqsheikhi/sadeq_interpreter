@@ -81,10 +81,6 @@ class SadeqParser(Parser):
     def statement(self, p):
         return p.var_assign
 
-    @_('expr')
-    def statement(self, p):
-        return p.expr
-
     # ====================================================
     # CONDITIONS
     @_('expr EQUAL expr',

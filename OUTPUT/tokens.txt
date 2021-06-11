@@ -1,1 +1,5 @@
 type='ID', value='x'
+type='ASSIGN', value='='
+type='NUMBER', value=3
+type='+', value='+'
+type='NUMBER', value=5

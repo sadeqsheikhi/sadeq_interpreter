@@ -1,3 +1,8 @@
 PROGRAM
-└── var
-    └── x
+└── var_assign
+    ├── x
+    └── +
+        ├── num
+        │   └── 3
+        └── num
+            └── 5
