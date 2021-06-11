@@ -27,7 +27,7 @@ if __name__ == '__main__':
     # parsing and generating AST
     # ---------------------------------------
     tupleTree = parser.parse(lexer.tokenize(script))
-
+    print(tupleTree)
     if tupleTree is not None:
         tree = makeTreeHandler(tupleTree)
         represent = tree.show(nid='program', reverse=True)

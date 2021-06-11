@@ -1,8 +1,14 @@
 PROGRAM
-└── var_assign
-    ├── x
-    └── +
-        ├── num
-        │   └── 3
-        └── num
-            └── 5
+├── print
+│   └── var
+│       └── t
+└── list_assign
+    ├── t
+    ├── str
+    │   └── 'string'
+    ├── num
+    │   └── 40
+    ├── num
+    │   └── 80
+    └── num
+        └── 788

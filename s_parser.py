@@ -106,7 +106,11 @@ class SadeqParser(Parser):
     # list_generate
     @_('expr "," list_generate')
     def list_generate(self, p):
-        return 'list_generate', p.ID, p.list_generate
+        return self.flatten([p.expr, p.list_generate])
+
+    @_('expr')
+    def list_generate(self, p):
+        return p.expr
 
     @_('')
     def list_generate(self, p):
@@ -157,8 +161,10 @@ def makeTree(parent, tree, myList):
 
     for node in myList:
 
-        # base state
-        if isinstance(node, (int, str)):
+        # base states
+        if node is None:
+            tree.create_node('none', parent + f' {tree.depth()} ' + str(node), parent)
+        elif isinstance(node, (int, str)):
             tree.create_node(node, parent + f' {tree.depth()} ' + str(node), parent)
 
         # recursively go in depth

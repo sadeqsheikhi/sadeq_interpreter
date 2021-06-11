@@ -44,6 +44,18 @@ class Interpreter:
                 return 0
 
         # ===================================================
+        # ARRAY CONTROLS
+        # ===================================================
+        if node[0] == 'list_assign':
+            if node[2] is None:
+                self.env[node[1]] = []
+                return node[1]
+            else:
+                self.env[node[1]] = []
+                for x in node[2]:
+                    self.env[node[1]].append(self.walkTree(x))
+
+        # ===================================================
         # CONTROL NODES
         # ===================================================
         if node[0] == 'if_stmt':

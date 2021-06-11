@@ -13,7 +13,7 @@ class SadeqLexer(Lexer):
               IF, ELSE, FOR, FOREACH, TO, IN, FUNC,
               PRINT}
 
-    literals = {'+', '-', '*', '/', '(', ')', '{', '}', ";", "%", "[", "]", ","}
+    literals = {'+', '-', '*', '/', '(', ')', '{', '}', ";", "%", "[", ",", "]"}
 
     # String containing ignored characters between tokens
     ignore = ' \t'
