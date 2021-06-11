@@ -1,0 +1,45 @@
+init ->
+       init statement
+       statement
+       ""
+
+statement ->
+            FOR var_assign TO expr "{" init "}"
+            FOREACH ID IN ID "{" init "}"
+            IF condition "{" init "}"
+            IF condition "{" init "}" ELSE "{" init "}"
+            FUNC ID "(" ")" "{" init "}"
+            ID "(" ")"
+            PRINT "(" STRING ")"
+            var_assign
+            expr
+
+condition ->
+            expr EQUAL expr
+            expr NEQUAL expr
+            expr GRT expr
+            expr SMT expr
+            expr GREQ expr
+            expr SMEQ expr
+
+
+var_assign ->
+            ID ASSIGN expr
+            ID ASSIGN "[" listgen "]"
+
+list_gen ->
+            expr "," list_generate
+            ""
+
+expr ->
+        expr "+" expr
+        expr "-" expr
+        expr "*" expr
+        expr "/" expr
+        expr "%" expr
+        "("expr")"
+        "-" expr %prec UMINUS'
+        ID
+        NUMBER
+        STRING
+        FLOAT
