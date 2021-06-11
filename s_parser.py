@@ -81,6 +81,14 @@ class SadeqParser(Parser):
     def statement(self, p):
         return p.var_assign
 
+    @_('POP "(" ID ")"')
+    def statement(self, p):
+        return 'pop', p.ID
+
+    @_('PUSH "(" ID "," expr ")"')
+    def statement(self, p):
+        return 'push', p.ID, p.expr
+
     # ====================================================
     # CONDITIONS
     @_('expr EQUAL expr',

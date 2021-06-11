@@ -64,6 +64,23 @@ class Interpreter:
             except LookupError:
                 print("LookupError: Undefined variable '" + node[1] + "' found!")
                 return -1
+
+        # pop
+        if node[0] == 'pop':
+            try:
+                return self.env[node[1]].pop()
+            except LookupError:
+                print("LookupError: Undefined variable '" + node[1] + "' found!")
+                return -1
+
+        # push
+        if node[0] == 'push':
+            try:
+                self.env[node[1]].append(self.walkTree(node[2]))
+            except LookupError:
+                print("LookupError: Undefined variable '" + node[1] + "' found!")
+                return -1
+
         # ===================================================
         # CONTROL NODES
         # ===================================================

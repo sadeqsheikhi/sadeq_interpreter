@@ -11,7 +11,7 @@ class SadeqLexer(Lexer):
               EQUAL, NEQUAL, GRT, SMT, GREQ, SMEQ,
               ASSIGN,
               IF, ELSE, FOR, FOREACH, TO, IN, FUNC,
-              PRINT}
+              PRINT, POP, PUSH}
 
     literals = {'+', '-', '*', '/', '(', ')', '{', '}', ";", "%", "[", ",", "]"}
 
@@ -40,6 +40,8 @@ class SadeqLexer(Lexer):
     ID['in'] = IN
     ID['function'] = FUNC
     ID['print'] = PRINT
+    ID['push'] = PUSH
+    ID['pop'] = POP
 
     @_(r'\d+\.\d+')
     def FLOAT(self, t):

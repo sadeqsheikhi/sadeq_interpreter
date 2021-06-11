@@ -1,3 +1,9 @@
 t = [ 'string', 40, 80, 788]
-print(t[2] - t[0])
+
+pop(t)
+print(t)
+
+push(t, 10)
+print(t)
+
 

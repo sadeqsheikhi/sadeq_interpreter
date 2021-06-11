@@ -1,14 +1,16 @@
 PROGRAM
+├── push
+│   ├── t
+│   └── num
+│       └── 10
 ├── print
-│   └── -
-│       ├── list_index
-│       │   ├── t
-│       │   └── num
-│       │       └── 2
-│       └── list_index
-│           ├── t
-│           └── num
-│               └── 0
+│   └── var
+│       └── t
+├── print
+│   └── var
+│       └── t
+├── pop
+│   └── t
 └── list_assign
     ├── t
     ├── str

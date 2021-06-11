@@ -12,7 +12,8 @@ statement ->
             ID "(" ")"
             PRINT "(" STRING ")"
             var_assign
-            expr
+            POP(ID)
+            PUSH(ID, expr)
 
 condition ->
             expr EQUAL expr
