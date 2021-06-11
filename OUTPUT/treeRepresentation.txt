@@ -1,7 +1,14 @@
 PROGRAM
 ├── print
-│   └── var
-│       └── t
+│   └── -
+│       ├── list_index
+│       │   ├── t
+│       │   └── num
+│       │       └── 2
+│       └── list_index
+│           ├── t
+│           └── num
+│               └── 0
 └── list_assign
     ├── t
     ├── str

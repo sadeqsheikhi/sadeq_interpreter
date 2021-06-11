@@ -107,6 +107,7 @@ class SadeqParser(Parser):
     @_('expr "," list_generate')
     def list_generate(self, p):
         return self.flatten([p.expr, p.list_generate])
+        # return [p.expr, p.list_generate]
 
     @_('expr')
     def list_generate(self, p):
@@ -139,6 +140,10 @@ class SadeqParser(Parser):
     def expr(self, p):
         return 'var', p.ID
 
+    @_('ID "[" expr "]"')
+    def expr(self, p):
+        return 'list_index', p.ID, p.expr
+
     @_('NUMBER')
     def expr(self, p):
         return 'num', p.NUMBER
@@ -152,7 +157,9 @@ class SadeqParser(Parser):
         return 'str', p.STRING
 
 
-# =================================================================
+
+
+    # =================================================================
 # CREATING REPRESENTATION USING TREELIB
 # =================================================================
 def makeTree(parent, tree, myList):

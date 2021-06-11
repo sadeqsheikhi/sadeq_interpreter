@@ -43,3 +43,4 @@ expr ->
         NUMBER
         STRING
         FLOAT
+        ID "[" expr "]"

@@ -13,6 +13,11 @@ type='PRINT', value='print'
 type='(', value='('
 type='ID', value='t'
 type='[', value='['
+type='NUMBER', value=2
+type=']', value=']'
+type='-', value='-'
+type='ID', value='t'
+type='[', value='['
 type='NUMBER', value=0
 type=']', value=']'
 type=')', value=')'

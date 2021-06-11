@@ -41,7 +41,7 @@ class Interpreter:
                 return self.env[node[1]]
             except LookupError:
                 print("LookupError: Undefined variable '" + node[1] + "' found!")
-                return 0
+                return -1
 
         # ===================================================
         # ARRAY CONTROLS
@@ -55,6 +55,15 @@ class Interpreter:
                 for x in node[2]:
                     self.env[node[1]].append(self.walkTree(x))
 
+        if node[0] == 'list_index':
+            try:
+                return self.env[node[1]][self.walkTree(node[2])]
+            except IndexError:
+                print("Index Error: index out of bound of array: " + node[1])
+                return -1
+            except LookupError:
+                print("LookupError: Undefined variable '" + node[1] + "' found!")
+                return -1
         # ===================================================
         # CONTROL NODES
         # ===================================================
@@ -101,7 +110,7 @@ class Interpreter:
                 return self.walkTree(self.env[node[1]])
             except LookupError:
                 print("LookupError -> Undefined function '%s'" % node[1])
-                return 0
+                return -1
 
         # ===================================================
         # EXPRESSIONS
@@ -109,41 +118,47 @@ class Interpreter:
         if node[0] == '+':
             res1 = self.walkTree(node[1])
             res2 = self.walkTree(node[2])
-            if type(res1) == 'str':
-                if type(res2) in ['int', 'float']:
-                    raise TypeError(f"Type Error: Cannot do arithmetic operation On Type {type(res1)} and {type(res2)}")
-            elif type(res2) == 'str':
-                if type(res1) in ['int', 'float']:
-                    raise TypeError(f"Type Error: Cannot do arithmetic operation On Type {type(res1)} and {type(res2)}")
+            if isinstance(res1, str):
+                if isinstance(res2, (int, float)):
+                    print(f"Type Error: Cannot do arithmetic operation On Type {type(res1)} and {type(res2)}")
+                    return -1
+            elif isinstance(res2, str):
+                if isinstance(res1, (int, float)):
+                    print(f"Type Error: Cannot do arithmetic operation On Type {type(res1)} and {type(res2)}")
+                    return -1
 
             return res1 + res2
 
         elif node[0] == '-':
             res1 = self.walkTree(node[1])
             res2 = self.walkTree(node[2])
-            if type(res1) == str or type(res2) == str:
-                raise TypeError(f'Type Error: cannot do subtraction of string type')
+            if isinstance(res1, str) or isinstance(res2, str):
+                print(f'Type Error: cannot do subtraction of string type')
+                return -1
             return res1 - res2
 
         elif node[0] == '*':
             res1 = self.walkTree(node[1])
             res2 = self.walkTree(node[2])
-            if type(res1) == str or type(res2) == str:
-                raise TypeError(f'Type Error: cannot do multiplication of string type')
+            if isinstance(res1, str) or isinstance(res2, str):
+                print(f'Type Error: cannot do subtraction of string type')
+                return -1
             return res1 * res2
 
         elif node[0] == '/':
             res1 = self.walkTree(node[1])
             res2 = self.walkTree(node[2])
-            if type(res1) == str or type(res2) == str:
-                raise TypeError(f'Type Error: cannot do division of string type')
+            if isinstance(res1, str) or isinstance(res2, str):
+                print(f'Type Error: cannot do subtraction of string type')
+                return -1
             return res1 / res2
 
         elif node[0] == '%':
             res1 = self.walkTree(node[1])
             res2 = self.walkTree(node[2])
             if type(res1) == str or type(res2) == str:
-                raise TypeError(f'Type Error: cannot do division of string type')
+                print(f'Type Error: cannot do subtraction of string type')
+                return -1
             return res1 % res2
 
         # ===================================================
