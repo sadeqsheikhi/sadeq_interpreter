@@ -1,14 +1,14 @@
-import os
-from s_lexer import SadeqLexer, stringifyTokens
-from s_parser import SadeqParser, makeTreeHandler
+from functools import reduce  # forward compatibility for Python 3
+import operator
+from pydash import set_, get, unset
 
 
 class Interpreter:
 
     def __init__(self, tree, env):
         self.env = env
+        self.currentNode = []
         self.walkTree(tree)
-        self.currentNode = ""
 
     def walkTree(self, node):
 
@@ -39,7 +39,14 @@ class Interpreter:
 
         if node[0] == 'var':
             try:
-                return self.env[node[1]]
+                # search for var from current to top
+                nested = self.currentNode[:]
+                while len(nested) > 0:
+                    value = self.getFromDict(self.env, nested)
+                    if value is None:
+                        nested.pop()
+                    else:
+                        return value[node[1]]
             except LookupError:
                 print("LookupError: Undefined variable '" + node[1] + "' found!")
                 return -1
@@ -204,13 +211,18 @@ class Interpreter:
         # ===================================================
         if node[0] == 'foreach_loop':
             if node[1][0] == 'foreach_loop_setup':
+                self.currentNode.append("foreach")
                 try:
                     for x in self.env[node[1][2]]:
-                        self.env[node[1][1]] = x
+                        self.setInDict(self.env, self.currentNode + [node[1][1]], x)
                         self.walkTree(node[2])
+
                 except LookupError:
                     print("LookupError: variable not found " + node[1][2])
                     return
+                self.deleteFromDict(self.env, self.currentNode)
+                print(self.env)
+                self.currentNode.pop()
 
         # ===================================================
         # PRINT COMMAND
@@ -220,5 +232,11 @@ class Interpreter:
             print(str(res).replace('"', "").replace("'", ''))
 
     # -------------------------------------------------
-    def compareTypes(self, aa, bb):
-        return type(aa) == type(bb)
+    def getFromDict(self, dataDict, mapList):
+        return get(dataDict, mapList)
+
+    def setInDict(self, dataDict, mapList, value):
+        return set_(dataDict, mapList, value)
+
+    def deleteFromDict(self, dataDict, mapList):
+        unset(dataDict, mapList)
