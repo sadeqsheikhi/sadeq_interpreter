@@ -1,3 +1,4 @@
+import sys
 from functools import reduce  # forward compatibility for Python 3
 import operator
 from pydash import set_, get, unset
@@ -34,7 +35,9 @@ class Interpreter:
             return node[1]
 
         if node[0] == 'var_assign':
-            self.env[node[1]] = self.walkTree(node[2])
+            holder = self.currentNode
+            res = self.walkTree(node[2])
+            self.setInDict(self.env, holder + [node[1]], res)
             return node[1]
 
         if node[0] == 'var':
@@ -43,29 +46,36 @@ class Interpreter:
                 nested = self.currentNode[:]
                 while len(nested) > 0:
                     value = self.getFromDict(self.env, nested)
+
                     if value is None:
+                        raise LookupError
+
+                    if node[1] not in value:
                         nested.pop()
                     else:
                         return value[node[1]]
+                return self.env[node[1]]
+
             except LookupError:
                 print("LookupError: Undefined variable '" + node[1] + "' found!")
-                return -1
+                exit()
 
         # ===================================================
         # ARRAY CONTROLS
         # ===================================================
         if node[0] == 'list_assign':
             if node[2] is None:
-                self.env[node[1]] = []
+                self.setInDict(self.env, self.currentNode + [node[1]], [])
                 return node[1]
             else:
-                self.env[node[1]] = []
+                holder = []
                 for x in node[2]:
-                    self.env[node[1]].append(self.walkTree(x))
+                    holder.append(self.walkTree(x))
+                self.setInDict(self.env, self.currentNode + [node[1]], holder)
 
         if node[0] == 'list_index':
             try:
-                return self.env[node[1]][self.walkTree(node[2])]
+                return self.getFromDict(self.env, self.currentNode + [node[1]])[self.walkTree(node[2])]
             except IndexError:
                 print("Index Error: index out of bound of array: " + node[1])
                 return -1
@@ -76,7 +86,11 @@ class Interpreter:
         # pop
         if node[0] == 'pop':
             try:
-                return self.env[node[1]].pop()
+                popped = self.getFromDict(self.env, self.currentNode + [node[1]])
+                if popped is None:
+                    raise LookupError
+                return popped.pop()
+
             except LookupError:
                 print("LookupError: Undefined variable '" + node[1] + "' found!")
                 return -1
@@ -84,7 +98,11 @@ class Interpreter:
         # push
         if node[0] == 'push':
             try:
-                self.env[node[1]].append(self.walkTree(node[2]))
+                pushed = self.getFromDict(self.env, self.currentNode + [node[1]])
+                if pushed is None:
+                    raise LookupError
+                pushed.append(self.walkTree(node[2]))
+
             except LookupError:
                 print("LookupError: Undefined variable '" + node[1] + "' found!")
                 return -1
@@ -128,11 +146,21 @@ class Interpreter:
         # FUNCTIONS
         # ===================================================
         if node[0] == 'func_def':
-            self.env[node[1]] = node[2]
+            return self.setInDict(self.env, self.currentNode + [node[1]], {'%def%': node[2]})
 
         if node[0] == 'func_call':
             try:
-                return self.walkTree(self.env[node[1]])
+                self.currentNode.append(node[1])
+                definition = self.getFromDict(self.env, self.currentNode + ['%def%'])
+
+                res = self.walkTree(definition)
+
+                # deleting from scope
+                scope = self.getFromDict(self.env, self.currentNode)
+                self.setInDict(self.env, self.currentNode, {'%def%': scope['%def%']})
+                self.currentNode.pop()
+                return res
+
             except LookupError:
                 print("LookupError -> Undefined function '%s'" % node[1])
                 return -1
@@ -219,9 +247,8 @@ class Interpreter:
 
                 except LookupError:
                     print("LookupError: variable not found " + node[1][2])
-                    return
+                    sys.exit()
                 self.deleteFromDict(self.env, self.currentNode)
-                print(self.env)
                 self.currentNode.pop()
 
         # ===================================================

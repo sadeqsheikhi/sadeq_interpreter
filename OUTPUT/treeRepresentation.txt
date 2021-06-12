@@ -1,18 +1,33 @@
 PROGRAM
+├── print
+│   └── var
+│       └── x
 ├── list_assign
-│   ├── t
+│   ├── x
 │   ├── str
-│   │   └── 'string'
-│   ├── num
-│   │   └── 40
-│   ├── num
-│   │   └── 80
-│   └── num
-│       └── 788
-└── foreach_loop
-    ├── print
-    │   └── var
-    │       └── x
-    └── foreach_loop_setup
-        ├── x
-        └── t
+│   │   └── 'sadeq'
+│   └── str
+│       └── 'base'
+├── func_def
+│   ├── sadeq
+│   ├── push
+│   │   ├── x
+│   │   └── num
+│   │       └── 23
+│   ├── print
+│   │   └── var
+│   │       └── x
+│   └── list_assign
+│       ├── x
+│       ├── num
+│       │   └── 1
+│       ├── num
+│       │   └── 3
+│       ├── num
+│       │   └── 4
+│       ├── num
+│       │   └── 5
+│       └── num
+│           └── 6
+└── func_call
+    └── sadeq

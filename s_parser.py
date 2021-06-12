@@ -164,6 +164,10 @@ class SadeqParser(Parser):
     def expr(self, p):
         return 'str', p.STRING
 
+    @_('POP "(" ID ")"')
+    def expr(self, p):
+        return 'pop', p.ID
+
 
 
 
