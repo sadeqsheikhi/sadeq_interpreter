@@ -57,21 +57,18 @@ class SadeqParser(Parser):
     def statement(self, p):
         return 'foreach_loop', ('foreach_loop_setup', p.ID0, p.ID1), p.init
 
-    @_('IF condition "{" init "}"')
+    @_('if_else')
     def statement(self, p):
-        return 'if_stmt', p.condition, p.init
+        return 'if_stmt', p.if_else
 
-    @_('IF condition "{" init "}" ELSE "{" init "}"')
-    def statement(self, p):
-        return 'if_else_stmt', p.condition, ('if', p.init0), ('else', p.init1)
 
-    @_('FUNC ID "(" ")" "{" init "}"')
+    @_('FUNC ID "(" id_list ")" "{" init "}"')
     def statement(self, p):
-        return 'func_def', p.ID, p.init
+        return 'func_def', p.ID, p.id_list, p.init
 
-    @_('ID "(" ")"')
+    @_('ID "(" expr_list ")"')
     def statement(self, p):
-        return 'func_call', p.ID
+        return 'func_call', p.ID, p.expr_list
 
     @_('PRINT "(" expr ")"')
     def statement(self, p):
@@ -89,6 +86,23 @@ class SadeqParser(Parser):
     def statement(self, p):
         return 'push', p.ID, p.expr
 
+    # ====================================================
+    # IF ELSE STATEMENT
+    @_('IF condition "{" init "}" el_if')
+    def if_else(self, p):
+        return 'if', p.condition, p.init, p.el_if
+
+    @_('ELSE IF condition "{" init "}" el_if')
+    def el_if(self, p):
+        return self.flatten([('else_if', p.condition, p.init), p.el_if])
+
+    @_('ELSE "{" init "}"')
+    def el_if(self, p):
+        return 'else', p.init
+
+    @_('')
+    def el_if(self, p):
+        return None
     # ====================================================
     # CONDITIONS
     @_('expr EQUAL expr',
@@ -111,11 +125,24 @@ class SadeqParser(Parser):
         return 'list_assign', p.ID, p.list_generate
 
     # ====================================================
+    # id_list
+    @_('ID "," id_list')
+    def id_list(self, p):
+        return self.flatten([p.ID, p.id_list])
+
+    @_('ID')
+    def id_list(self, p):
+        return p.ID
+
+    @_('')
+    def id_list(self, p):
+        return None
+
+    # ====================================================
     # list_generate
     @_('expr "," list_generate')
     def list_generate(self, p):
         return self.flatten([p.expr, p.list_generate])
-        # return [p.expr, p.list_generate]
 
     @_('expr')
     def list_generate(self, p):
@@ -126,7 +153,21 @@ class SadeqParser(Parser):
         return None
 
     # ====================================================
-    # expression
+    # expression List
+    @_('expr "," expr_list')
+    def expr_list(self, p):
+        return self.flatten([p.expr, p.expr_list])
+
+    @_('expr')
+    def expr_list(self, p):
+        return p.expr
+
+    @_('')
+    def expr_list(self, p):
+        return None
+
+    # ====================================================
+    # expressions
     @_('expr "+" expr',
        'expr "-" expr',
        'expr "*" expr',
@@ -168,11 +209,14 @@ class SadeqParser(Parser):
     def expr(self, p):
         return 'pop', p.ID
 
-
-
+    @_('LEN "(" expr ")"')
+    def expr(self, p):
+        return 'len', p.expr
 
     # =================================================================
-# CREATING REPRESENTATION USING TREELIB
+
+
+# CREATING REPRESENTATION USING TREELINE
 # =================================================================
 def makeTree(parent, tree, myList):
     # index is used to number the adjacent & similar functions

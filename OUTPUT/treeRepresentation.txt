@@ -1,33 +1,49 @@
 PROGRAM
-├── print
-│   └── var
-│       └── x
-├── list_assign
+├── var_assign
 │   ├── x
-│   ├── str
-│   │   └── 'sadeq'
-│   └── str
-│       └── 'base'
-├── func_def
-│   ├── sadeq
-│   ├── push
-│   │   ├── x
-│   │   └── num
-│   │       └── 23
-│   ├── print
-│   │   └── var
-│   │       └── x
-│   └── list_assign
-│       ├── x
-│       ├── num
-│       │   └── 1
-│       ├── num
-│       │   └── 3
-│       ├── num
-│       │   └── 4
-│       ├── num
-│       │   └── 5
-│       └── num
-│           └── 6
-└── func_call
-    └── sadeq
+│   └── num
+│       └── 2
+└── if_stmt
+    └── if
+        ├── print
+        │   └── str
+        │       └── 'first'
+        ├── print
+        │   └── str
+        │       └── 'first'
+        ├── else_if
+        │   ├── print
+        │   │   └── str
+        │   │       └── 'second'
+        │   ├── print
+        │   │   └── str
+        │   │       └── 'second'
+        │   └── condition_>
+        │       ├── var
+        │       │   └── x
+        │       └── num
+        │           └── 5
+        ├── else_if
+        │   ├── print
+        │   │   └── str
+        │   │       └── 'third'
+        │   ├── print
+        │   │   └── str
+        │   │       └── 'third'
+        │   └── condition_>=
+        │       ├── var
+        │       │   └── x
+        │       └── num
+        │           └── 5
+        ├── else
+        │   ├── print
+        │   │   └── str
+        │   │       └── '4'
+        │   └── print
+        │       └── str
+        │           └── '4'
+        └── condition_==
+            ├── var
+            │   └── x
+            └── num
+                └── 3

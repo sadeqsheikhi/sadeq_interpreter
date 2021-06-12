@@ -1,22 +1,32 @@
-init ->
-       init statement
-       statement
-       ""
+init ------>
+            init statement
+            statement
+            ""
 
 statement ->
             FOR var_assign TO expr "{" init "}"
             FOREACH ID IN ID "{" init "}"
-            IF condition "{" init "}"
-            IF condition "{" init "}" ELSE "{" init "}"
-            FUNC ID "(" ")" "{" init "}"
-            ID "(" ")"
+            if_else
+            FUNC ID "(" id_list ")" "{" init "}"
+            ID "(" expr_list ")"
             PRINT "(" STRING ")"
             var_assign
             POP(ID)
             PUSH(ID, expr)
 
-if_statement ->
+id_list --->
+            ID "," id_list
+            ID
+            ""
 
+if_else ->
+           IF condition "{" init "} el_if"
+
+
+el_if ---->
+            ELSE if_else
+            ELSE "{" init "}"
+            ""
 
 condition ->
             expr EQUAL expr
@@ -31,20 +41,27 @@ var_assign ->
             ID ASSIGN expr
             ID ASSIGN "[" listgen "]"
 
-list_gen ->
+list_gen -->
             expr "," list_generate
             ""
 
-expr ->
-        expr "+" expr
-        expr "-" expr
-        expr "*" expr
-        expr "/" expr
-        expr "%" expr
-        "("expr")"
-        "-" expr %prec UMINUS'
-        ID
-        NUMBER
-        STRING
-        FLOAT
-        ID "[" expr "]"
+expr_list ->
+            expr "," expr
+            ""
+
+
+expr ------>
+            expr "+" expr
+            expr "-" expr
+            expr "*" expr
+            expr "/" expr
+            expr "%" expr
+            "("expr")"
+            "-" expr %prec UMINUS'
+            ID
+            NUMBER
+            STRING
+            FLOAT
+            ID "[" expr "]"
+            POP(ID)
+            LEN "(" expr ")"
