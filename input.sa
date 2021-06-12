@@ -1,14 +1,1 @@
-x = 2
-if x == 3 {
-    print('first')
-    print('first')
-} else if x > 5 {
-    print('second')
-    print('second')
-} else if x >= 5 {
-    print('third')
-    print('third')
-} else {
-    print('4')
-    print('4')
-}
+# write down your text

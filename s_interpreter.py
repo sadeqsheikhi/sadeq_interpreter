@@ -1,7 +1,17 @@
 import sys
-from functools import reduce  # forward compatibility for Python 3
-import operator
 from pydash import set_, get, unset
+
+
+def getFromDict(dataDict, mapList):
+    return get(dataDict, mapList)
+
+
+def setInDict(dataDict, mapList, value):
+    return set_(dataDict, mapList, value)
+
+
+def deleteFromDict(dataDict, mapList):
+    unset(dataDict, mapList)
 
 
 class Interpreter:
@@ -37,15 +47,17 @@ class Interpreter:
         if node[0] == 'var_assign':
             holder = self.currentNode
             res = self.walkTree(node[2])
-            self.setInDict(self.env, holder + [node[1]], res)
+            setInDict(self.env, holder + [node[1]], res)
             return node[1]
 
+        # ---------------------
+        # getting variable values based on scope hierarchy
         if node[0] == 'var':
             try:
                 # search for var from current to top
                 nested = self.currentNode[:]
                 while len(nested) > 0:
-                    value = self.getFromDict(self.env, nested)
+                    value = getFromDict(self.env, nested)
 
                     if value is None:
                         raise LookupError
@@ -65,17 +77,19 @@ class Interpreter:
         # ===================================================
         if node[0] == 'list_assign':
             if node[2] is None:
-                self.setInDict(self.env, self.currentNode + [node[1]], [])
+                setInDict(self.env, self.currentNode + [node[1]], [])
                 return node[1]
             else:
                 holder = []
                 for x in node[2]:
                     holder.append(self.walkTree(x))
-                self.setInDict(self.env, self.currentNode + [node[1]], holder)
+                setInDict(self.env, self.currentNode + [node[1]], holder)
 
+        # ---------------------
+        # getting index like some_array[3]
         if node[0] == 'list_index':
             try:
-                holder = self.getFromDict(self.env, self.currentNode + [node[1]])[self.walkTree(node[2])]
+                holder = getFromDict(self.env, self.currentNode + [node[1]])[self.walkTree(node[2])]
             except IndexError:
                 print("Index Error: index out of bound of array: " + node[1])
                 return -1
@@ -83,10 +97,11 @@ class Interpreter:
                 print("LookupError: Undefined variable '" + node[1] + "' found!")
                 return -1
 
-        # pop
+        # ---------------------
+        # pop from list
         if node[0] == 'pop':
             try:
-                popped = self.getFromDict(self.env, self.currentNode + [node[1]])
+                popped = getFromDict(self.env, self.currentNode + [node[1]])
                 if popped is None:
                     raise LookupError
                 elif not isinstance(popped, list):
@@ -100,10 +115,11 @@ class Interpreter:
                 print("TypeError: pop method is only defined for list type")
                 exit()
 
-        # push
+        # ---------------------
+        # push for list
         if node[0] == 'push':
             try:
-                pushed = self.getFromDict(self.env, self.currentNode + [node[1]])
+                pushed = getFromDict(self.env, self.currentNode + [node[1]])
                 if pushed is None:
                     raise LookupError
                 elif not isinstance(pushed, list):
@@ -119,13 +135,15 @@ class Interpreter:
                 exit()
 
         # ===================================================
-        # CONTROL NODES
+        # IF STATEMENTS
         # ===================================================
         if node[0] == 'if_stmt':
             result = self.walkTree(node[1][1])
             if result:
                 return self.walkTree(node[1][2])
             else:
+                if node[1][3] is None:
+                    return
                 for x in node[1][3]:
                     if x[0] == 'else_if':
                         result = self.walkTree(x[1])
@@ -159,29 +177,31 @@ class Interpreter:
         # FUNCTIONS
         # ===================================================
         if node[0] == 'func_def':
-            self.setInDict(self.env, self.currentNode + [node[1]], {'%def%': node[3]})
-            self.setInDict(self.env, self.currentNode + [node[1]] + ['%pars%'], tuple(node[2]))
+            # setting definition and pars
+            setInDict(self.env, self.currentNode + [node[1]], {'%def%': node[3]})
+            setInDict(self.env, self.currentNode + [node[1]] + ['%pars%'], tuple(node[2]))
             return
 
         if node[0] == 'func_call':
             try:
                 self.currentNode.append(node[1])
-                definition = self.getFromDict(self.env, self.currentNode + ['%def%'])
-                parameters = self.getFromDict(self.env, self.currentNode + ['%pars%'])
+                definition = getFromDict(self.env, self.currentNode + ['%def%'])
+                parameters = getFromDict(self.env, self.currentNode + ['%pars%'])
 
                 # comparing parameters satisfaction
                 if len(parameters) is not len(node[2]):
                     print('ParameterError: Given parameters don\'t match inputs')
                     exit()
                 else:
+                    # set parameters as variables
                     for i in range(len(parameters)):
-                        self.setInDict(self.env, self.currentNode + [parameters[i]], self.walkTree(node[2][i]))
+                        setInDict(self.env, self.currentNode + [parameters[i]], self.walkTree(node[2][i]))
 
                 res = self.walkTree(definition)
 
                 # deleting from scope
-                scope = self.getFromDict(self.env, self.currentNode)
-                self.setInDict(self.env, self.currentNode, {'%def%': scope['%def%'], '%pars%': scope['%pars%']})
+                scope = getFromDict(self.env, self.currentNode)
+                setInDict(self.env, self.currentNode, {'%def%': scope['%def%'], '%pars%': scope['%pars%']})
                 self.currentNode.pop()
                 return res
 
@@ -195,6 +215,8 @@ class Interpreter:
         if node[0] == '+':
             res1 = self.walkTree(node[1])
             res2 = self.walkTree(node[2])
+
+            # type cheking
             if isinstance(res1, str):
                 if isinstance(res2, (int, float)):
                     print(f"Type Error: Cannot do arithmetic operation On Type {type(res1)} and {type(res2)}")
@@ -250,8 +272,6 @@ class Interpreter:
 
                 for i in range(loop_count + 1, loop_limit + 1):
                     res = self.walkTree(node[2])
-                    # if res is not None:
-                    #     print(res)
                     self.env[loop_setup[0]] = i
                 del self.env[loop_setup[0]]
 
@@ -266,13 +286,13 @@ class Interpreter:
                 self.currentNode.append("foreach")
                 try:
                     for x in self.env[node[1][2]]:
-                        self.setInDict(self.env, self.currentNode + [node[1][1]], x)
+                        setInDict(self.env, self.currentNode + [node[1][1]], x)
                         self.walkTree(node[2])
 
                 except LookupError:
                     print("LookupError: variable not found " + node[1][2])
                     sys.exit()
-                self.deleteFromDict(self.env, self.currentNode)
+                deleteFromDict(self.env, self.currentNode)
                 self.currentNode.pop()
 
         # ===================================================
@@ -293,12 +313,3 @@ class Interpreter:
                 print('TypeError: len() only accepts list and strings')
                 exit()
 
-    # -------------------------------------------------
-    def getFromDict(self, dataDict, mapList):
-        return get(dataDict, mapList)
-
-    def setInDict(self, dataDict, mapList, value):
-        return set_(dataDict, mapList, value)
-
-    def deleteFromDict(self, dataDict, mapList):
-        unset(dataDict, mapList)

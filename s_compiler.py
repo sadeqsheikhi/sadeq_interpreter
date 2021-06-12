@@ -27,11 +27,15 @@ if __name__ == '__main__':
     # parsing and generating AST
     # ---------------------------------------
     tupleTree = parser.parse(lexer.tokenize(script))
-    print(tupleTree)
     if tupleTree is not None:
         tree = makeTreeHandler(tupleTree)
-        represent = tree.show(nid='program', reverse=True)
         os.remove('OUTPUT\\treeRepresentation.txt')
+
+        f = open('OUTPUT\\treeRepresentation.txt', "w+")
+        import json
+        f.write(json.dumps(tupleTree) + '\n\n\n')
+        f.close()
+
         tree.save2file(filename='OUTPUT\\treeRepresentation.txt', reverse=True)
 
     # setting up env and execute

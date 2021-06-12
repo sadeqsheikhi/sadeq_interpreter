@@ -32,9 +32,9 @@ class SadeqParser(Parser):
     # defines the staring rule
     start = 'init'
 
-    # =================================================================
-    # GRAMMAR RULES
-    # =================================================================
+    # ============================================================================================
+    # --------------------------------------------------------------------------------------------- GRAMMAR RULES
+    # ============================================================================================
     @_('init statement')
     def init(self, p):
         return self.flatten([p.init, p.statement])
@@ -60,7 +60,6 @@ class SadeqParser(Parser):
     @_('if_else')
     def statement(self, p):
         return 'if_stmt', p.if_else
-
 
     @_('FUNC ID "(" id_list ")" "{" init "}"')
     def statement(self, p):
@@ -103,6 +102,7 @@ class SadeqParser(Parser):
     @_('')
     def el_if(self, p):
         return None
+
     # ====================================================
     # CONDITIONS
     @_('expr EQUAL expr',
@@ -213,10 +213,8 @@ class SadeqParser(Parser):
     def expr(self, p):
         return 'len', p.expr
 
-    # =================================================================
 
-
-# CREATING REPRESENTATION USING TREELINE
+# CREATING REPRESENTATION USING TREELIB
 # =================================================================
 def makeTree(parent, tree, myList):
     # index is used to number the adjacent & similar functions
@@ -270,6 +268,3 @@ def makeTreeHandler(myList):
     # Recursive function to generate the treelib tree
     makeTree('program', tree, myList)
     return tree
-
-#   tree.to_graphviz(filename='dotRepresentation')
-# representGraph = Graph(filename="dotRepresentation", comment="Generated AST", format='PNG')

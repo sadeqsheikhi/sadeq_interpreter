@@ -1,49 +1,15 @@
+["if_stmt", ["if", ["condition_==", ["num", 3], ["num", 3]], ["print", ["str", "'sadeq'"]], null]]
+
+
 PROGRAM
-├── var_assign
-│   ├── x
-│   └── num
-│       └── 2
 └── if_stmt
     └── if
         ├── print
         │   └── str
-        │       └── 'first'
-        ├── print
-        │   └── str
-        │       └── 'first'
-        ├── else_if
-        │   ├── print
-        │   │   └── str
-        │   │       └── 'second'
-        │   ├── print
-        │   │   └── str
-        │   │       └── 'second'
-        │   └── condition_>
-        │       ├── var
-        │       │   └── x
-        │       └── num
-        │           └── 5
-        ├── else_if
-        │   ├── print
-        │   │   └── str
-        │   │       └── 'third'
-        │   ├── print
-        │   │   └── str
-        │   │       └── 'third'
-        │   └── condition_>=
-        │       ├── var
-        │       │   └── x
-        │       └── num
-        │           └── 5
-        ├── else
-        │   ├── print
-        │   │   └── str
-        │   │       └── '4'
-        │   └── print
-        │       └── str
-        │           └── '4'
+        │       └── 'sadeq'
+        ├── none
         └── condition_==
-            ├── var
-            │   └── x
+            ├── num
+            │   └── 3
             └── num
                 └── 3
