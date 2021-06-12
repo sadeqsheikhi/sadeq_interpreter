@@ -8,6 +8,7 @@ class Interpreter:
     def __init__(self, tree, env):
         self.env = env
         self.walkTree(tree)
+        self.currentNode = ""
 
     def walkTree(self, node):
 
@@ -197,6 +198,19 @@ class Interpreter:
 
         if node[0] == 'fori_loop_setup':
             return self.walkTree(node[1]), self.walkTree(node[2])
+
+        # ===================================================
+        # FOR EACH LOOP
+        # ===================================================
+        if node[0] == 'foreach_loop':
+            if node[1][0] == 'foreach_loop_setup':
+                try:
+                    for x in self.env[node[1][2]]:
+                        self.env[node[1][1]] = x
+                        self.walkTree(node[2])
+                except LookupError:
+                    print("LookupError: variable not found " + node[1][2])
+                    return
 
         # ===================================================
         # PRINT COMMAND
