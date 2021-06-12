@@ -13,8 +13,12 @@ if __name__ == '__main__':
 
     # reading the file
     # ---------------------------------------
-    # fileName = input('PARSE FILE ==> ')
-    script = readFile('input.sa')
+    print('----------------------------------------------')
+    fileName = input('PARSE FILE ==> ')
+    script = readFile(f'INPUT/{fileName}')
+
+    # empty space
+    print('\n\n')
 
     # tokenizing the input
     # ---------------------------------------
@@ -29,8 +33,9 @@ if __name__ == '__main__':
     tupleTree = parser.parse(lexer.tokenize(script))
     if tupleTree is not None:
         tree = makeTreeHandler(tupleTree)
-        os.remove('OUTPUT\\treeRepresentation.txt')
 
+        # writing to file
+        os.remove('OUTPUT\\treeRepresentation.txt')
         f = open('OUTPUT\\treeRepresentation.txt', "w+")
         import json
         f.write(json.dumps(tupleTree) + '\n\n\n')
@@ -42,3 +47,6 @@ if __name__ == '__main__':
     # ---------------------------------------
     env = {}
     Interpreter(tupleTree, env)
+
+
+    

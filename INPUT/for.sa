@@ -1,0 +1,12 @@
+arr = ['phone', 'tablet', 'laptop']
+
+function sample(arr) {
+    foreach x in arr {
+        for i=1 to 3 {
+          print(x)
+        }
+        print('-------------')
+    }
+}
+
+sample(arr)

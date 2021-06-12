@@ -11,7 +11,7 @@ class SadeqParser(Parser):
     # =================================================================
 
     tokens = SadeqLexer.tokens
-    # debugfile = 'parser.out'
+    # debugfile = 'OUTPUT\\parser.out'
 
     # this is used to avoid ambiguity in the grammer
     precedence = (
@@ -84,6 +84,10 @@ class SadeqParser(Parser):
     @_('PUSH "(" ID "," expr ")"')
     def statement(self, p):
         return 'push', p.ID, p.expr
+
+    @_('RETURN expr')
+    def statement(self, p):
+        return 'return', p.expr
 
     # ====================================================
     # IF ELSE STATEMENT
@@ -212,6 +216,10 @@ class SadeqParser(Parser):
     @_('LEN "(" expr ")"')
     def expr(self, p):
         return 'len', p.expr
+
+    @_('ID "(" expr_list ")"')
+    def expr(self, p):
+        return 'func_call', p.ID, p.expr_list
 
 
 # CREATING REPRESENTATION USING TREELIB

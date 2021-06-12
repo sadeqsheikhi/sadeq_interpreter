@@ -1,15 +1,61 @@
-["if_stmt", ["if", ["condition_==", ["num", 3], ["num", 3]], ["print", ["str", "'sadeq'"]], null]]
+[["list_assign", "x", [["num", 1], ["num", 2]]], ["var_assign", "t", ["str", "'sadeq'"]], ["func_def", "innerScope", "x", [["print", ["str", "'x is the function parameter'"]], ["print", ["var", "x"]], ["print", ["str", "'t from global scope is:'"]], ["print", ["var", "t"]], ["print", ["str", "'t from function scope is:'"]], ["list_assign", "t", [["num", 3], ["num", 4]]], ["print", ["var", "t"]], ["print", ["str", "'inside foreach loop has own scope for x only'"]], ["foreach_loop", ["foreach_loop_setup", "x", "t"], ["print", ["var", "x"]]]]], ["func_call", "innerScope", ["num", 3]], ["print", ["str", "'x is from outer scope'"]], ["print", ["var", "x"]]]
 
 
 PROGRAM
-└── if_stmt
-    └── if
-        ├── print
-        │   └── str
-        │       └── 'sadeq'
-        ├── none
-        └── condition_==
-            ├── num
-            │   └── 3
-            └── num
-                └── 3
+├── var_assign
+│   ├── t
+│   └── str
+│       └── 'sadeq'
+├── print
+│   └── str
+│       └── 'x is from outer scope'
+├── print
+│   └── var
+│       └── x
+├── list_assign
+│   ├── x
+│   ├── num
+│   │   └── 1
+│   └── num
+│       └── 2
+├── func_def
+│   ├── x
+│   ├── print
+│   │   └── str
+│   │       └── 'x is the function parameter'
+│   ├── print
+│   │   └── var
+│   │       └── x
+│   ├── print
+│   │   └── str
+│   │       └── 't from global scope is:'
+│   ├── print
+│   │   └── var
+│   │       └── t
+│   ├── print
+│   │   └── str
+│   │       └── 't from function scope is:'
+│   ├── print
+│   │   └── var
+│   │       └── t
+│   ├── print
+│   │   └── str
+│   │       └── 'inside foreach loop has own scope for x only'
+│   ├── list_assign
+│   │   ├── t
+│   │   ├── num
+│   │   │   └── 3
+│   │   └── num
+│   │       └── 4
+│   ├── innerScope
+│   └── foreach_loop
+│       ├── print
+│       │   └── var
+│       │       └── x
+│       └── foreach_loop_setup
+│           ├── x
+│           └── t
+└── func_call
+    ├── num
+    │   └── 3
+    └── innerScope

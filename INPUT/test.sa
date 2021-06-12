@@ -1,0 +1,6 @@
+function a() {
+    f = [3, 4, 6]
+    return f
+}
+
+print(a())

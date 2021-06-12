@@ -13,6 +13,7 @@ statement ->
             var_assign
             POP(ID)
             PUSH(ID, expr)
+            RETURN expr
 
 id_list --->
             ID "," id_list

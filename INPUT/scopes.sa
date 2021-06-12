@@ -1,0 +1,25 @@
+x = [1, 2]
+t = 'sadeq'
+
+function innerScope(x) {
+
+	print('x is the function parameter')
+	print(x) #3
+
+
+	print('t from global scope is:')
+    print(t) # sadeq
+
+	print('t from function scope is:')
+    t = [3, 4]
+    print(t) #[3,4]
+
+    print('inside foreach loop has own scope for x only')
+    foreach x in t {
+        print(x)
+    }
+}
+
+innerScope(3)
+print('x is from outer scope')
+print(x)

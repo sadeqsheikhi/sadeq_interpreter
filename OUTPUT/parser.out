@@ -1,0 +1,2871 @@
+Grammar:
+
+Rule 0     S' -> init
+Rule 1     init -> <empty>
+Rule 2     init -> statement
+Rule 3     init -> init statement
+Rule 4     statement -> RETURN expr
+Rule 5     statement -> PUSH ( ID , expr )
+Rule 6     statement -> POP ( ID )
+Rule 7     statement -> var_assign
+Rule 8     statement -> PRINT ( expr )
+Rule 9     statement -> ID ( expr_list )
+Rule 10    statement -> FUNC ID ( id_list ) { init }
+Rule 11    statement -> if_else
+Rule 12    statement -> FOREACH ID IN ID { init }
+Rule 13    statement -> FOR var_assign TO expr { init }
+Rule 14    if_else -> IF condition { init } el_if
+Rule 15    el_if -> <empty>
+Rule 16    el_if -> ELSE { init }
+Rule 17    el_if -> ELSE IF condition { init } el_if
+Rule 18    condition -> expr SMEQ expr  [precedence=nonassoc, level=1]
+Rule 19    condition -> expr GREQ expr  [precedence=nonassoc, level=1]
+Rule 20    condition -> expr SMT expr  [precedence=nonassoc, level=1]
+Rule 21    condition -> expr GRT expr  [precedence=nonassoc, level=1]
+Rule 22    condition -> expr NEQUAL expr
+Rule 23    condition -> expr EQUAL expr
+Rule 24    var_assign -> ID ASSIGN [ list_generate ]
+Rule 25    var_assign -> ID ASSIGN expr
+Rule 26    id_list -> <empty>
+Rule 27    id_list -> ID
+Rule 28    id_list -> ID , id_list
+Rule 29    list_generate -> <empty>
+Rule 30    list_generate -> expr
+Rule 31    list_generate -> expr , list_generate
+Rule 32    expr_list -> <empty>
+Rule 33    expr_list -> expr
+Rule 34    expr_list -> expr , expr_list
+Rule 35    expr -> ID ( expr_list )
+Rule 36    expr -> LEN ( expr )
+Rule 37    expr -> POP ( ID )
+Rule 38    expr -> STRING
+Rule 39    expr -> FLOAT
+Rule 40    expr -> NUMBER
+Rule 41    expr -> ID [ expr ]
+Rule 42    expr -> ID
+Rule 43    expr -> ( expr )
+Rule 44    expr -> - expr  [precedence=right, level=4]
+Rule 45    expr -> expr % expr
+Rule 46    expr -> expr / expr  [precedence=left, level=3]
+Rule 47    expr -> expr * expr  [precedence=left, level=3]
+Rule 48    expr -> expr - expr  [precedence=left, level=2]
+Rule 49    expr -> expr + expr  [precedence=left, level=2]
+
+Terminals, with rules where they appear:
+
+%                    : 45
+(                    : 5 6 8 9 10 35 36 37 43
+)                    : 5 6 8 9 10 35 36 37 43
+*                    : 47
++                    : 49
+,                    : 5 28 31 34
+-                    : 44 48
+/                    : 46
+ASSIGN               : 24 25
+ELSE                 : 16 17
+EQUAL                : 23
+FLOAT                : 39
+FOR                  : 13
+FOREACH              : 12
+FUNC                 : 10
+GREQ                 : 19
+GRT                  : 21
+ID                   : 5 6 9 10 12 12 24 25 27 28 35 37 41 42
+IF                   : 14 17
+IN                   : 12
+LEN                  : 36
+NEQUAL               : 22
+NUMBER               : 40
+POP                  : 6 37
+PRINT                : 8
+PUSH                 : 5
+RETURN               : 4
+SMEQ                 : 18
+SMT                  : 20
+STRING               : 38
+TO                   : 13
+[                    : 24 41
+]                    : 24 41
+error                : 
+{                    : 10 12 13 14 16 17
+}                    : 10 12 13 14 16 17
+
+Nonterminals, with rules where they appear:
+
+condition            : 14 17
+el_if                : 14 17
+expr                 : 4 5 8 13 18 18 19 19 20 20 21 21 22 22 23 23 25 30 31 33 34 36 41 43 44 45 45 46 46 47 47 48 48 49 49
+expr_list            : 9 34 35
+id_list              : 10 28
+if_else              : 11
+init                 : 3 10 12 13 14 16 17 0
+list_generate        : 24 31
+statement            : 2 3
+var_assign           : 7 13
+
+
+state 0
+
+    (0) S' -> . init
+    (1) init -> .
+    (2) init -> . statement
+    (3) init -> . init statement
+    (4) statement -> . RETURN expr
+    (5) statement -> . PUSH ( ID , expr )
+    (6) statement -> . POP ( ID )
+    (7) statement -> . var_assign
+    (8) statement -> . PRINT ( expr )
+    (9) statement -> . ID ( expr_list )
+    (10) statement -> . FUNC ID ( id_list ) { init }
+    (11) statement -> . if_else
+    (12) statement -> . FOREACH ID IN ID { init }
+    (13) statement -> . FOR var_assign TO expr { init }
+    (24) var_assign -> . ID ASSIGN [ list_generate ]
+    (25) var_assign -> . ID ASSIGN expr
+    (14) if_else -> . IF condition { init } el_if
+  ! shift/reduce conflict for RETURN resolved as shift
+  ! shift/reduce conflict for PUSH resolved as shift
+  ! shift/reduce conflict for POP resolved as shift
+  ! shift/reduce conflict for PRINT resolved as shift
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for FUNC resolved as shift
+  ! shift/reduce conflict for FOREACH resolved as shift
+  ! shift/reduce conflict for FOR resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+    $end            reduce using rule 1 (init -> .)
+    RETURN          shift and go to state 3
+    PUSH            shift and go to state 4
+    POP             shift and go to state 6
+    PRINT           shift and go to state 8
+    ID              shift and go to state 5
+    FUNC            shift and go to state 9
+    FOREACH         shift and go to state 11
+    FOR             shift and go to state 12
+    IF              shift and go to state 13
+
+    init                           shift and go to state 1
+    statement                      shift and go to state 2
+    var_assign                     shift and go to state 7
+    if_else                        shift and go to state 10
+
+state 1
+
+    (0) S' -> init .
+    (3) init -> init . statement
+    (4) statement -> . RETURN expr
+    (5) statement -> . PUSH ( ID , expr )
+    (6) statement -> . POP ( ID )
+    (7) statement -> . var_assign
+    (8) statement -> . PRINT ( expr )
+    (9) statement -> . ID ( expr_list )
+    (10) statement -> . FUNC ID ( id_list ) { init }
+    (11) statement -> . if_else
+    (12) statement -> . FOREACH ID IN ID { init }
+    (13) statement -> . FOR var_assign TO expr { init }
+    (24) var_assign -> . ID ASSIGN [ list_generate ]
+    (25) var_assign -> . ID ASSIGN expr
+    (14) if_else -> . IF condition { init } el_if
+    RETURN          shift and go to state 3
+    PUSH            shift and go to state 4
+    POP             shift and go to state 6
+    PRINT           shift and go to state 8
+    ID              shift and go to state 5
+    FUNC            shift and go to state 9
+    FOREACH         shift and go to state 11
+    FOR             shift and go to state 12
+    IF              shift and go to state 13
+
+    statement                      shift and go to state 14
+    var_assign                     shift and go to state 7
+    if_else                        shift and go to state 10
+
+state 2
+
+    (2) init -> statement .
+    RETURN          reduce using rule 2 (init -> statement .)
+    PUSH            reduce using rule 2 (init -> statement .)
+    POP             reduce using rule 2 (init -> statement .)
+    PRINT           reduce using rule 2 (init -> statement .)
+    ID              reduce using rule 2 (init -> statement .)
+    FUNC            reduce using rule 2 (init -> statement .)
+    FOREACH         reduce using rule 2 (init -> statement .)
+    FOR             reduce using rule 2 (init -> statement .)
+    IF              reduce using rule 2 (init -> statement .)
+    $end            reduce using rule 2 (init -> statement .)
+    }               reduce using rule 2 (init -> statement .)
+
+
+state 3
+
+    (4) statement -> RETURN . expr
+    (35) expr -> . ID ( expr_list )
+    (36) expr -> . LEN ( expr )
+    (37) expr -> . POP ( ID )
+    (38) expr -> . STRING
+    (39) expr -> . FLOAT
+    (40) expr -> . NUMBER
+    (41) expr -> . ID [ expr ]
+    (42) expr -> . ID
+    (43) expr -> . ( expr )
+    (44) expr -> . - expr
+    (45) expr -> . expr % expr
+    (46) expr -> . expr / expr
+    (47) expr -> . expr * expr
+    (48) expr -> . expr - expr
+    (49) expr -> . expr + expr
+    ID              shift and go to state 16
+    LEN             shift and go to state 18
+    POP             shift and go to state 19
+    STRING          shift and go to state 20
+    FLOAT           shift and go to state 21
+    NUMBER          shift and go to state 22
+    (               shift and go to state 17
+    -               shift and go to state 23
+
+    expr                           shift and go to state 15
+
+state 4
+
+    (5) statement -> PUSH . ( ID , expr )
+    (               shift and go to state 24
+
+
+state 5
+
+    (9) statement -> ID . ( expr_list )
+    (24) var_assign -> ID . ASSIGN [ list_generate ]
+    (25) var_assign -> ID . ASSIGN expr
+    (               shift and go to state 25
+    ASSIGN          shift and go to state 26
+
+
+state 6
+
+    (6) statement -> POP . ( ID )
+    (               shift and go to state 27
+
+
+state 7
+
+    (7) statement -> var_assign .
+    RETURN          reduce using rule 7 (statement -> var_assign .)
+    PUSH            reduce using rule 7 (statement -> var_assign .)
+    POP             reduce using rule 7 (statement -> var_assign .)
+    PRINT           reduce using rule 7 (statement -> var_assign .)
+    ID              reduce using rule 7 (statement -> var_assign .)
+    FUNC            reduce using rule 7 (statement -> var_assign .)
+    FOREACH         reduce using rule 7 (statement -> var_assign .)
+    FOR             reduce using rule 7 (statement -> var_assign .)
+    IF              reduce using rule 7 (statement -> var_assign .)
+    $end            reduce using rule 7 (statement -> var_assign .)
+    }               reduce using rule 7 (statement -> var_assign .)
+
+
+state 8
+
+    (8) statement -> PRINT . ( expr )
+    (               shift and go to state 28
+
+
+state 9
+
+    (10) statement -> FUNC . ID ( id_list ) { init }
+    ID              shift and go to state 29
+
+
+state 10
+
+    (11) statement -> if_else .
+    RETURN          reduce using rule 11 (statement -> if_else .)
+    PUSH            reduce using rule 11 (statement -> if_else .)
+    POP             reduce using rule 11 (statement -> if_else .)
+    PRINT           reduce using rule 11 (statement -> if_else .)
+    ID              reduce using rule 11 (statement -> if_else .)
+    FUNC            reduce using rule 11 (statement -> if_else .)
+    FOREACH         reduce using rule 11 (statement -> if_else .)
+    FOR             reduce using rule 11 (statement -> if_else .)
+    IF              reduce using rule 11 (statement -> if_else .)
+    $end            reduce using rule 11 (statement -> if_else .)
+    }               reduce using rule 11 (statement -> if_else .)
+
+
+state 11
+
+    (12) statement -> FOREACH . ID IN ID { init }
+    ID              shift and go to state 30
+
+
+state 12
+
+    (13) statement -> FOR . var_assign TO expr { init }
+    (24) var_assign -> . ID ASSIGN [ list_generate ]
+    (25) var_assign -> . ID ASSIGN expr
+    ID              shift and go to state 32
+
+    var_assign                     shift and go to state 31
+
+state 13
+
+    (14) if_else -> IF . condition { init } el_if
+    (18) condition -> . expr SMEQ expr
+    (19) condition -> . expr GREQ expr
+    (20) condition -> . expr SMT expr
+    (21) condition -> . expr GRT expr
+    (22) condition -> . expr NEQUAL expr
+    (23) condition -> . expr EQUAL expr
+    (35) expr -> . ID ( expr_list )
+    (36) expr -> . LEN ( expr )
+    (37) expr -> . POP ( ID )
+    (38) expr -> . STRING
+    (39) expr -> . FLOAT
+    (40) expr -> . NUMBER
+    (41) expr -> . ID [ expr ]
+    (42) expr -> . ID
+    (43) expr -> . ( expr )
+    (44) expr -> . - expr
+    (45) expr -> . expr % expr
+    (46) expr -> . expr / expr
+    (47) expr -> . expr * expr
+    (48) expr -> . expr - expr
+    (49) expr -> . expr + expr
+    ID              shift and go to state 16
+    LEN             shift and go to state 18
+    POP             shift and go to state 19
+    STRING          shift and go to state 20
+    FLOAT           shift and go to state 21
+    NUMBER          shift and go to state 22
+    (               shift and go to state 17
+    -               shift and go to state 23
+
+    condition                      shift and go to state 33
+    expr                           shift and go to state 34
+
+state 14
+
+    (3) init -> init statement .
+    RETURN          reduce using rule 3 (init -> init statement .)
+    PUSH            reduce using rule 3 (init -> init statement .)
+    POP             reduce using rule 3 (init -> init statement .)
+    PRINT           reduce using rule 3 (init -> init statement .)
+    ID              reduce using rule 3 (init -> init statement .)
+    FUNC            reduce using rule 3 (init -> init statement .)
+    FOREACH         reduce using rule 3 (init -> init statement .)
+    FOR             reduce using rule 3 (init -> init statement .)
+    IF              reduce using rule 3 (init -> init statement .)
+    $end            reduce using rule 3 (init -> init statement .)
+    }               reduce using rule 3 (init -> init statement .)
+
+
+state 15
+
+    (4) statement -> RETURN expr .
+    (45) expr -> expr . % expr
+    (46) expr -> expr . / expr
+    (47) expr -> expr . * expr
+    (48) expr -> expr . - expr
+    (49) expr -> expr . + expr
+    RETURN          reduce using rule 4 (statement -> RETURN expr .)
+    PUSH            reduce using rule 4 (statement -> RETURN expr .)
+    POP             reduce using rule 4 (statement -> RETURN expr .)
+    PRINT           reduce using rule 4 (statement -> RETURN expr .)
+    ID              reduce using rule 4 (statement -> RETURN expr .)
+    FUNC            reduce using rule 4 (statement -> RETURN expr .)
+    FOREACH         reduce using rule 4 (statement -> RETURN expr .)
+    FOR             reduce using rule 4 (statement -> RETURN expr .)
+    IF              reduce using rule 4 (statement -> RETURN expr .)
+    $end            reduce using rule 4 (statement -> RETURN expr .)
+    }               reduce using rule 4 (statement -> RETURN expr .)
+    %               shift and go to state 35
+    /               shift and go to state 36
+    *               shift and go to state 37
+    -               shift and go to state 38
+    +               shift and go to state 39
+
+
+state 16
+
+    (35) expr -> ID . ( expr_list )
+    (41) expr -> ID . [ expr ]
+    (42) expr -> ID .
+    (               shift and go to state 40
+    [               shift and go to state 41
+    %               reduce using rule 42 (expr -> ID .)
+    /               reduce using rule 42 (expr -> ID .)
+    *               reduce using rule 42 (expr -> ID .)
+    -               reduce using rule 42 (expr -> ID .)
+    +               reduce using rule 42 (expr -> ID .)
+    RETURN          reduce using rule 42 (expr -> ID .)
+    PUSH            reduce using rule 42 (expr -> ID .)
+    POP             reduce using rule 42 (expr -> ID .)
+    PRINT           reduce using rule 42 (expr -> ID .)
+    ID              reduce using rule 42 (expr -> ID .)
+    FUNC            reduce using rule 42 (expr -> ID .)
+    FOREACH         reduce using rule 42 (expr -> ID .)
+    FOR             reduce using rule 42 (expr -> ID .)
+    IF              reduce using rule 42 (expr -> ID .)
+    $end            reduce using rule 42 (expr -> ID .)
+    }               reduce using rule 42 (expr -> ID .)
+    SMEQ            reduce using rule 42 (expr -> ID .)
+    GREQ            reduce using rule 42 (expr -> ID .)
+    SMT             reduce using rule 42 (expr -> ID .)
+    GRT             reduce using rule 42 (expr -> ID .)
+    NEQUAL          reduce using rule 42 (expr -> ID .)
+    EQUAL           reduce using rule 42 (expr -> ID .)
+    )               reduce using rule 42 (expr -> ID .)
+    ,               reduce using rule 42 (expr -> ID .)
+    TO              reduce using rule 42 (expr -> ID .)
+    ]               reduce using rule 42 (expr -> ID .)
+    {               reduce using rule 42 (expr -> ID .)
+
+
+state 17
+
+    (43) expr -> ( . expr )
+    (35) expr -> . ID ( expr_list )
+    (36) expr -> . LEN ( expr )
+    (37) expr -> . POP ( ID )
+    (38) expr -> . STRING
+    (39) expr -> . FLOAT
+    (40) expr -> . NUMBER
+    (41) expr -> . ID [ expr ]
+    (42) expr -> . ID
+    (43) expr -> . ( expr )
+    (44) expr -> . - expr
+    (45) expr -> . expr % expr
+    (46) expr -> . expr / expr
+    (47) expr -> . expr * expr
+    (48) expr -> . expr - expr
+    (49) expr -> . expr + expr
+    ID              shift and go to state 16
+    LEN             shift and go to state 18
+    POP             shift and go to state 19
+    STRING          shift and go to state 20
+    FLOAT           shift and go to state 21
+    NUMBER          shift and go to state 22
+    (               shift and go to state 17
+    -               shift and go to state 23
+
+    expr                           shift and go to state 42
+
+state 18
+
+    (36) expr -> LEN . ( expr )
+    (               shift and go to state 43
+
+
+state 19
+
+    (37) expr -> POP . ( ID )
+    (               shift and go to state 44
+
+
+state 20
+
+    (38) expr -> STRING .
+    %               reduce using rule 38 (expr -> STRING .)
+    /               reduce using rule 38 (expr -> STRING .)
+    *               reduce using rule 38 (expr -> STRING .)
+    -               reduce using rule 38 (expr -> STRING .)
+    +               reduce using rule 38 (expr -> STRING .)
+    RETURN          reduce using rule 38 (expr -> STRING .)
+    PUSH            reduce using rule 38 (expr -> STRING .)
+    POP             reduce using rule 38 (expr -> STRING .)
+    PRINT           reduce using rule 38 (expr -> STRING .)
+    ID              reduce using rule 38 (expr -> STRING .)
+    FUNC            reduce using rule 38 (expr -> STRING .)
+    FOREACH         reduce using rule 38 (expr -> STRING .)
+    FOR             reduce using rule 38 (expr -> STRING .)
+    IF              reduce using rule 38 (expr -> STRING .)
+    $end            reduce using rule 38 (expr -> STRING .)
+    }               reduce using rule 38 (expr -> STRING .)
+    SMEQ            reduce using rule 38 (expr -> STRING .)
+    GREQ            reduce using rule 38 (expr -> STRING .)
+    SMT             reduce using rule 38 (expr -> STRING .)
+    GRT             reduce using rule 38 (expr -> STRING .)
+    NEQUAL          reduce using rule 38 (expr -> STRING .)
+    EQUAL           reduce using rule 38 (expr -> STRING .)
+    )               reduce using rule 38 (expr -> STRING .)
+    ,               reduce using rule 38 (expr -> STRING .)
+    TO              reduce using rule 38 (expr -> STRING .)
+    ]               reduce using rule 38 (expr -> STRING .)
+    {               reduce using rule 38 (expr -> STRING .)
+
+
+state 21
+
+    (39) expr -> FLOAT .
+    %               reduce using rule 39 (expr -> FLOAT .)
+    /               reduce using rule 39 (expr -> FLOAT .)
+    *               reduce using rule 39 (expr -> FLOAT .)
+    -               reduce using rule 39 (expr -> FLOAT .)
+    +               reduce using rule 39 (expr -> FLOAT .)
+    RETURN          reduce using rule 39 (expr -> FLOAT .)
+    PUSH            reduce using rule 39 (expr -> FLOAT .)
+    POP             reduce using rule 39 (expr -> FLOAT .)
+    PRINT           reduce using rule 39 (expr -> FLOAT .)
+    ID              reduce using rule 39 (expr -> FLOAT .)
+    FUNC            reduce using rule 39 (expr -> FLOAT .)
+    FOREACH         reduce using rule 39 (expr -> FLOAT .)
+    FOR             reduce using rule 39 (expr -> FLOAT .)
+    IF              reduce using rule 39 (expr -> FLOAT .)
+    $end            reduce using rule 39 (expr -> FLOAT .)
+    }               reduce using rule 39 (expr -> FLOAT .)
+    SMEQ            reduce using rule 39 (expr -> FLOAT .)
+    GREQ            reduce using rule 39 (expr -> FLOAT .)
+    SMT             reduce using rule 39 (expr -> FLOAT .)
+    GRT             reduce using rule 39 (expr -> FLOAT .)
+    NEQUAL          reduce using rule 39 (expr -> FLOAT .)
+    EQUAL           reduce using rule 39 (expr -> FLOAT .)
+    )               reduce using rule 39 (expr -> FLOAT .)
+    ,               reduce using rule 39 (expr -> FLOAT .)
+    TO              reduce using rule 39 (expr -> FLOAT .)
+    ]               reduce using rule 39 (expr -> FLOAT .)
+    {               reduce using rule 39 (expr -> FLOAT .)
+
+
+state 22
+
+    (40) expr -> NUMBER .
+    %               reduce using rule 40 (expr -> NUMBER .)
+    /               reduce using rule 40 (expr -> NUMBER .)
+    *               reduce using rule 40 (expr -> NUMBER .)
+    -               reduce using rule 40 (expr -> NUMBER .)
+    +               reduce using rule 40 (expr -> NUMBER .)
+    RETURN          reduce using rule 40 (expr -> NUMBER .)
+    PUSH            reduce using rule 40 (expr -> NUMBER .)
+    POP             reduce using rule 40 (expr -> NUMBER .)
+    PRINT           reduce using rule 40 (expr -> NUMBER .)
+    ID              reduce using rule 40 (expr -> NUMBER .)
+    FUNC            reduce using rule 40 (expr -> NUMBER .)
+    FOREACH         reduce using rule 40 (expr -> NUMBER .)
+    FOR             reduce using rule 40 (expr -> NUMBER .)
+    IF              reduce using rule 40 (expr -> NUMBER .)
+    $end            reduce using rule 40 (expr -> NUMBER .)
+    }               reduce using rule 40 (expr -> NUMBER .)
+    SMEQ            reduce using rule 40 (expr -> NUMBER .)
+    GREQ            reduce using rule 40 (expr -> NUMBER .)
+    SMT             reduce using rule 40 (expr -> NUMBER .)
+    GRT             reduce using rule 40 (expr -> NUMBER .)
+    NEQUAL          reduce using rule 40 (expr -> NUMBER .)
+    EQUAL           reduce using rule 40 (expr -> NUMBER .)
+    )               reduce using rule 40 (expr -> NUMBER .)
+    ,               reduce using rule 40 (expr -> NUMBER .)
+    TO              reduce using rule 40 (expr -> NUMBER .)
+    ]               reduce using rule 40 (expr -> NUMBER .)
+    {               reduce using rule 40 (expr -> NUMBER .)
+
+
+state 23
+
+    (44) expr -> - . expr
+    (35) expr -> . ID ( expr_list )
+    (36) expr -> . LEN ( expr )
+    (37) expr -> . POP ( ID )
+    (38) expr -> . STRING
+    (39) expr -> . FLOAT
+    (40) expr -> . NUMBER
+    (41) expr -> . ID [ expr ]
+    (42) expr -> . ID
+    (43) expr -> . ( expr )
+    (44) expr -> . - expr
+    (45) expr -> . expr % expr
+    (46) expr -> . expr / expr
+    (47) expr -> . expr * expr
+    (48) expr -> . expr - expr
+    (49) expr -> . expr + expr
+    ID              shift and go to state 16
+    LEN             shift and go to state 18
+    POP             shift and go to state 19
+    STRING          shift and go to state 20
+    FLOAT           shift and go to state 21
+    NUMBER          shift and go to state 22
+    (               shift and go to state 17
+    -               shift and go to state 23
+
+    expr                           shift and go to state 45
+
+state 24
+
+    (5) statement -> PUSH ( . ID , expr )
+    ID              shift and go to state 46
+
+
+state 25
+
+    (9) statement -> ID ( . expr_list )
+    (32) expr_list -> .
+    (33) expr_list -> . expr
+    (34) expr_list -> . expr , expr_list
+    (35) expr -> . ID ( expr_list )
+    (36) expr -> . LEN ( expr )
+    (37) expr -> . POP ( ID )
+    (38) expr -> . STRING
+    (39) expr -> . FLOAT
+    (40) expr -> . NUMBER
+    (41) expr -> . ID [ expr ]
+    (42) expr -> . ID
+    (43) expr -> . ( expr )
+    (44) expr -> . - expr
+    (45) expr -> . expr % expr
+    (46) expr -> . expr / expr
+    (47) expr -> . expr * expr
+    (48) expr -> . expr - expr
+    (49) expr -> . expr + expr
+    )               reduce using rule 32 (expr_list -> .)
+    ID              shift and go to state 16
+    LEN             shift and go to state 18
+    POP             shift and go to state 19
+    STRING          shift and go to state 20
+    FLOAT           shift and go to state 21
+    NUMBER          shift and go to state 22
+    (               shift and go to state 17
+    -               shift and go to state 23
+
+    expr_list                      shift and go to state 47
+    expr                           shift and go to state 48
+
+state 26
+
+    (24) var_assign -> ID ASSIGN . [ list_generate ]
+    (25) var_assign -> ID ASSIGN . expr
+    (35) expr -> . ID ( expr_list )
+    (36) expr -> . LEN ( expr )
+    (37) expr -> . POP ( ID )
+    (38) expr -> . STRING
+    (39) expr -> . FLOAT
+    (40) expr -> . NUMBER
+    (41) expr -> . ID [ expr ]
+    (42) expr -> . ID
+    (43) expr -> . ( expr )
+    (44) expr -> . - expr
+    (45) expr -> . expr % expr
+    (46) expr -> . expr / expr
+    (47) expr -> . expr * expr
+    (48) expr -> . expr - expr
+    (49) expr -> . expr + expr
+    [               shift and go to state 49
+    ID              shift and go to state 16
+    LEN             shift and go to state 18
+    POP             shift and go to state 19
+    STRING          shift and go to state 20
+    FLOAT           shift and go to state 21
+    NUMBER          shift and go to state 22
+    (               shift and go to state 17
+    -               shift and go to state 23
+
+    expr                           shift and go to state 50
+
+state 27
+
+    (6) statement -> POP ( . ID )
+    ID              shift and go to state 51
+
+
+state 28
+
+    (8) statement -> PRINT ( . expr )
+    (35) expr -> . ID ( expr_list )
+    (36) expr -> . LEN ( expr )
+    (37) expr -> . POP ( ID )
+    (38) expr -> . STRING
+    (39) expr -> . FLOAT
+    (40) expr -> . NUMBER
+    (41) expr -> . ID [ expr ]
+    (42) expr -> . ID
+    (43) expr -> . ( expr )
+    (44) expr -> . - expr
+    (45) expr -> . expr % expr
+    (46) expr -> . expr / expr
+    (47) expr -> . expr * expr
+    (48) expr -> . expr - expr
+    (49) expr -> . expr + expr
+    ID              shift and go to state 16
+    LEN             shift and go to state 18
+    POP             shift and go to state 19
+    STRING          shift and go to state 20
+    FLOAT           shift and go to state 21
+    NUMBER          shift and go to state 22
+    (               shift and go to state 17
+    -               shift and go to state 23
+
+    expr                           shift and go to state 52
+
+state 29
+
+    (10) statement -> FUNC ID . ( id_list ) { init }
+    (               shift and go to state 53
+
+
+state 30
+
+    (12) statement -> FOREACH ID . IN ID { init }
+    IN              shift and go to state 54
+
+
+state 31
+
+    (13) statement -> FOR var_assign . TO expr { init }
+    TO              shift and go to state 55
+
+
+state 32
+
+    (24) var_assign -> ID . ASSIGN [ list_generate ]
+    (25) var_assign -> ID . ASSIGN expr
+    ASSIGN          shift and go to state 26
+
+
+state 33
+
+    (14) if_else -> IF condition . { init } el_if
+    {               shift and go to state 56
+
+
+state 34
+
+    (18) condition -> expr . SMEQ expr
+    (19) condition -> expr . GREQ expr
+    (20) condition -> expr . SMT expr
+    (21) condition -> expr . GRT expr
+    (22) condition -> expr . NEQUAL expr
+    (23) condition -> expr . EQUAL expr
+    (45) expr -> expr . % expr
+    (46) expr -> expr . / expr
+    (47) expr -> expr . * expr
+    (48) expr -> expr . - expr
+    (49) expr -> expr . + expr
+    SMEQ            shift and go to state 57
+    GREQ            shift and go to state 58
+    SMT             shift and go to state 59
+    GRT             shift and go to state 60
+    NEQUAL          shift and go to state 61
+    EQUAL           shift and go to state 62
+    %               shift and go to state 35
+    /               shift and go to state 36
+    *               shift and go to state 37
+    -               shift and go to state 38
+    +               shift and go to state 39
+
+
+state 35
+
+    (45) expr -> expr % . expr
+    (35) expr -> . ID ( expr_list )
+    (36) expr -> . LEN ( expr )
+    (37) expr -> . POP ( ID )
+    (38) expr -> . STRING
+    (39) expr -> . FLOAT
+    (40) expr -> . NUMBER
+    (41) expr -> . ID [ expr ]
+    (42) expr -> . ID
+    (43) expr -> . ( expr )
+    (44) expr -> . - expr
+    (45) expr -> . expr % expr
+    (46) expr -> . expr / expr
+    (47) expr -> . expr * expr
+    (48) expr -> . expr - expr
+    (49) expr -> . expr + expr
+    ID              shift and go to state 16
+    LEN             shift and go to state 18
+    POP             shift and go to state 19
+    STRING          shift and go to state 20
+    FLOAT           shift and go to state 21
+    NUMBER          shift and go to state 22
+    (               shift and go to state 17
+    -               shift and go to state 23
+
+    expr                           shift and go to state 63
+
+state 36
+
+    (46) expr -> expr / . expr
+    (35) expr -> . ID ( expr_list )
+    (36) expr -> . LEN ( expr )
+    (37) expr -> . POP ( ID )
+    (38) expr -> . STRING
+    (39) expr -> . FLOAT
+    (40) expr -> . NUMBER
+    (41) expr -> . ID [ expr ]
+    (42) expr -> . ID
+    (43) expr -> . ( expr )
+    (44) expr -> . - expr
+    (45) expr -> . expr % expr
+    (46) expr -> . expr / expr
+    (47) expr -> . expr * expr
+    (48) expr -> . expr - expr
+    (49) expr -> . expr + expr
+    ID              shift and go to state 16
+    LEN             shift and go to state 18
+    POP             shift and go to state 19
+    STRING          shift and go to state 20
+    FLOAT           shift and go to state 21
+    NUMBER          shift and go to state 22
+    (               shift and go to state 17
+    -               shift and go to state 23
+
+    expr                           shift and go to state 64
+
+state 37
+
+    (47) expr -> expr * . expr
+    (35) expr -> . ID ( expr_list )
+    (36) expr -> . LEN ( expr )
+    (37) expr -> . POP ( ID )
+    (38) expr -> . STRING
+    (39) expr -> . FLOAT
+    (40) expr -> . NUMBER
+    (41) expr -> . ID [ expr ]
+    (42) expr -> . ID
+    (43) expr -> . ( expr )
+    (44) expr -> . - expr
+    (45) expr -> . expr % expr
+    (46) expr -> . expr / expr
+    (47) expr -> . expr * expr
+    (48) expr -> . expr - expr
+    (49) expr -> . expr + expr
+    ID              shift and go to state 16
+    LEN             shift and go to state 18
+    POP             shift and go to state 19
+    STRING          shift and go to state 20
+    FLOAT           shift and go to state 21
+    NUMBER          shift and go to state 22
+    (               shift and go to state 17
+    -               shift and go to state 23
+
+    expr                           shift and go to state 65
+
+state 38
+
+    (48) expr -> expr - . expr
+    (35) expr -> . ID ( expr_list )
+    (36) expr -> . LEN ( expr )
+    (37) expr -> . POP ( ID )
+    (38) expr -> . STRING
+    (39) expr -> . FLOAT
+    (40) expr -> . NUMBER
+    (41) expr -> . ID [ expr ]
+    (42) expr -> . ID
+    (43) expr -> . ( expr )
+    (44) expr -> . - expr
+    (45) expr -> . expr % expr
+    (46) expr -> . expr / expr
+    (47) expr -> . expr * expr
+    (48) expr -> . expr - expr
+    (49) expr -> . expr + expr
+    ID              shift and go to state 16
+    LEN             shift and go to state 18
+    POP             shift and go to state 19
+    STRING          shift and go to state 20
+    FLOAT           shift and go to state 21
+    NUMBER          shift and go to state 22
+    (               shift and go to state 17
+    -               shift and go to state 23
+
+    expr                           shift and go to state 66
+
+state 39
+
+    (49) expr -> expr + . expr
+    (35) expr -> . ID ( expr_list )
+    (36) expr -> . LEN ( expr )
+    (37) expr -> . POP ( ID )
+    (38) expr -> . STRING
+    (39) expr -> . FLOAT
+    (40) expr -> . NUMBER
+    (41) expr -> . ID [ expr ]
+    (42) expr -> . ID
+    (43) expr -> . ( expr )
+    (44) expr -> . - expr
+    (45) expr -> . expr % expr
+    (46) expr -> . expr / expr
+    (47) expr -> . expr * expr
+    (48) expr -> . expr - expr
+    (49) expr -> . expr + expr
+    ID              shift and go to state 16
+    LEN             shift and go to state 18
+    POP             shift and go to state 19
+    STRING          shift and go to state 20
+    FLOAT           shift and go to state 21
+    NUMBER          shift and go to state 22
+    (               shift and go to state 17
+    -               shift and go to state 23
+
+    expr                           shift and go to state 67
+
+state 40
+
+    (35) expr -> ID ( . expr_list )
+    (32) expr_list -> .
+    (33) expr_list -> . expr
+    (34) expr_list -> . expr , expr_list
+    (35) expr -> . ID ( expr_list )
+    (36) expr -> . LEN ( expr )
+    (37) expr -> . POP ( ID )
+    (38) expr -> . STRING
+    (39) expr -> . FLOAT
+    (40) expr -> . NUMBER
+    (41) expr -> . ID [ expr ]
+    (42) expr -> . ID
+    (43) expr -> . ( expr )
+    (44) expr -> . - expr
+    (45) expr -> . expr % expr
+    (46) expr -> . expr / expr
+    (47) expr -> . expr * expr
+    (48) expr -> . expr - expr
+    (49) expr -> . expr + expr
+    )               reduce using rule 32 (expr_list -> .)
+    ID              shift and go to state 16
+    LEN             shift and go to state 18
+    POP             shift and go to state 19
+    STRING          shift and go to state 20
+    FLOAT           shift and go to state 21
+    NUMBER          shift and go to state 22
+    (               shift and go to state 17
+    -               shift and go to state 23
+
+    expr_list                      shift and go to state 68
+    expr                           shift and go to state 48
+
+state 41
+
+    (41) expr -> ID [ . expr ]
+    (35) expr -> . ID ( expr_list )
+    (36) expr -> . LEN ( expr )
+    (37) expr -> . POP ( ID )
+    (38) expr -> . STRING
+    (39) expr -> . FLOAT
+    (40) expr -> . NUMBER
+    (41) expr -> . ID [ expr ]
+    (42) expr -> . ID
+    (43) expr -> . ( expr )
+    (44) expr -> . - expr
+    (45) expr -> . expr % expr
+    (46) expr -> . expr / expr
+    (47) expr -> . expr * expr
+    (48) expr -> . expr - expr
+    (49) expr -> . expr + expr
+    ID              shift and go to state 16
+    LEN             shift and go to state 18
+    POP             shift and go to state 19
+    STRING          shift and go to state 20
+    FLOAT           shift and go to state 21
+    NUMBER          shift and go to state 22
+    (               shift and go to state 17
+    -               shift and go to state 23
+
+    expr                           shift and go to state 69
+
+state 42
+
+    (43) expr -> ( expr . )
+    (45) expr -> expr . % expr
+    (46) expr -> expr . / expr
+    (47) expr -> expr . * expr
+    (48) expr -> expr . - expr
+    (49) expr -> expr . + expr
+    )               shift and go to state 70
+    %               shift and go to state 35
+    /               shift and go to state 36
+    *               shift and go to state 37
+    -               shift and go to state 38
+    +               shift and go to state 39
+
+
+state 43
+
+    (36) expr -> LEN ( . expr )
+    (35) expr -> . ID ( expr_list )
+    (36) expr -> . LEN ( expr )
+    (37) expr -> . POP ( ID )
+    (38) expr -> . STRING
+    (39) expr -> . FLOAT
+    (40) expr -> . NUMBER
+    (41) expr -> . ID [ expr ]
+    (42) expr -> . ID
+    (43) expr -> . ( expr )
+    (44) expr -> . - expr
+    (45) expr -> . expr % expr
+    (46) expr -> . expr / expr
+    (47) expr -> . expr * expr
+    (48) expr -> . expr - expr
+    (49) expr -> . expr + expr
+    ID              shift and go to state 16
+    LEN             shift and go to state 18
+    POP             shift and go to state 19
+    STRING          shift and go to state 20
+    FLOAT           shift and go to state 21
+    NUMBER          shift and go to state 22
+    (               shift and go to state 17
+    -               shift and go to state 23
+
+    expr                           shift and go to state 71
+
+state 44
+
+    (37) expr -> POP ( . ID )
+    ID              shift and go to state 72
+
+
+state 45
+
+    (44) expr -> - expr .
+    (45) expr -> expr . % expr
+    (46) expr -> expr . / expr
+    (47) expr -> expr . * expr
+    (48) expr -> expr . - expr
+    (49) expr -> expr . + expr
+    %               reduce using rule 44 (expr -> - expr .)
+    /               reduce using rule 44 (expr -> - expr .)
+    *               reduce using rule 44 (expr -> - expr .)
+    -               reduce using rule 44 (expr -> - expr .)
+    +               reduce using rule 44 (expr -> - expr .)
+    RETURN          reduce using rule 44 (expr -> - expr .)
+    PUSH            reduce using rule 44 (expr -> - expr .)
+    POP             reduce using rule 44 (expr -> - expr .)
+    PRINT           reduce using rule 44 (expr -> - expr .)
+    ID              reduce using rule 44 (expr -> - expr .)
+    FUNC            reduce using rule 44 (expr -> - expr .)
+    FOREACH         reduce using rule 44 (expr -> - expr .)
+    FOR             reduce using rule 44 (expr -> - expr .)
+    IF              reduce using rule 44 (expr -> - expr .)
+    $end            reduce using rule 44 (expr -> - expr .)
+    }               reduce using rule 44 (expr -> - expr .)
+    SMEQ            reduce using rule 44 (expr -> - expr .)
+    GREQ            reduce using rule 44 (expr -> - expr .)
+    SMT             reduce using rule 44 (expr -> - expr .)
+    GRT             reduce using rule 44 (expr -> - expr .)
+    NEQUAL          reduce using rule 44 (expr -> - expr .)
+    EQUAL           reduce using rule 44 (expr -> - expr .)
+    )               reduce using rule 44 (expr -> - expr .)
+    ,               reduce using rule 44 (expr -> - expr .)
+    TO              reduce using rule 44 (expr -> - expr .)
+    ]               reduce using rule 44 (expr -> - expr .)
+    {               reduce using rule 44 (expr -> - expr .)
+
+
+state 46
+
+    (5) statement -> PUSH ( ID . , expr )
+    ,               shift and go to state 73
+
+
+state 47
+
+    (9) statement -> ID ( expr_list . )
+    )               shift and go to state 74
+
+
+state 48
+
+    (33) expr_list -> expr .
+    (34) expr_list -> expr . , expr_list
+    (45) expr -> expr . % expr
+    (46) expr -> expr . / expr
+    (47) expr -> expr . * expr
+    (48) expr -> expr . - expr
+    (49) expr -> expr . + expr
+    )               reduce using rule 33 (expr_list -> expr .)
+    ,               shift and go to state 75
+    %               shift and go to state 35
+    /               shift and go to state 36
+    *               shift and go to state 37
+    -               shift and go to state 38
+    +               shift and go to state 39
+
+
+state 49
+
+    (24) var_assign -> ID ASSIGN [ . list_generate ]
+    (29) list_generate -> .
+    (30) list_generate -> . expr
+    (31) list_generate -> . expr , list_generate
+    (35) expr -> . ID ( expr_list )
+    (36) expr -> . LEN ( expr )
+    (37) expr -> . POP ( ID )
+    (38) expr -> . STRING
+    (39) expr -> . FLOAT
+    (40) expr -> . NUMBER
+    (41) expr -> . ID [ expr ]
+    (42) expr -> . ID
+    (43) expr -> . ( expr )
+    (44) expr -> . - expr
+    (45) expr -> . expr % expr
+    (46) expr -> . expr / expr
+    (47) expr -> . expr * expr
+    (48) expr -> . expr - expr
+    (49) expr -> . expr + expr
+    ]               reduce using rule 29 (list_generate -> .)
+    ID              shift and go to state 16
+    LEN             shift and go to state 18
+    POP             shift and go to state 19
+    STRING          shift and go to state 20
+    FLOAT           shift and go to state 21
+    NUMBER          shift and go to state 22
+    (               shift and go to state 17
+    -               shift and go to state 23
+
+    list_generate                  shift and go to state 76
+    expr                           shift and go to state 77
+
+state 50
+
+    (25) var_assign -> ID ASSIGN expr .
+    (45) expr -> expr . % expr
+    (46) expr -> expr . / expr
+    (47) expr -> expr . * expr
+    (48) expr -> expr . - expr
+    (49) expr -> expr . + expr
+    RETURN          reduce using rule 25 (var_assign -> ID ASSIGN expr .)
+    PUSH            reduce using rule 25 (var_assign -> ID ASSIGN expr .)
+    POP             reduce using rule 25 (var_assign -> ID ASSIGN expr .)
+    PRINT           reduce using rule 25 (var_assign -> ID ASSIGN expr .)
+    ID              reduce using rule 25 (var_assign -> ID ASSIGN expr .)
+    FUNC            reduce using rule 25 (var_assign -> ID ASSIGN expr .)
+    FOREACH         reduce using rule 25 (var_assign -> ID ASSIGN expr .)
+    FOR             reduce using rule 25 (var_assign -> ID ASSIGN expr .)
+    IF              reduce using rule 25 (var_assign -> ID ASSIGN expr .)
+    $end            reduce using rule 25 (var_assign -> ID ASSIGN expr .)
+    TO              reduce using rule 25 (var_assign -> ID ASSIGN expr .)
+    }               reduce using rule 25 (var_assign -> ID ASSIGN expr .)
+    %               shift and go to state 35
+    /               shift and go to state 36
+    *               shift and go to state 37
+    -               shift and go to state 38
+    +               shift and go to state 39
+
+
+state 51
+
+    (6) statement -> POP ( ID . )
+    )               shift and go to state 78
+
+
+state 52
+
+    (8) statement -> PRINT ( expr . )
+    (45) expr -> expr . % expr
+    (46) expr -> expr . / expr
+    (47) expr -> expr . * expr
+    (48) expr -> expr . - expr
+    (49) expr -> expr . + expr
+    )               shift and go to state 79
+    %               shift and go to state 35
+    /               shift and go to state 36
+    *               shift and go to state 37
+    -               shift and go to state 38
+    +               shift and go to state 39
+
+
+state 53
+
+    (10) statement -> FUNC ID ( . id_list ) { init }
+    (26) id_list -> .
+    (27) id_list -> . ID
+    (28) id_list -> . ID , id_list
+    )               reduce using rule 26 (id_list -> .)
+    ID              shift and go to state 80
+
+    id_list                        shift and go to state 81
+
+state 54
+
+    (12) statement -> FOREACH ID IN . ID { init }
+    ID              shift and go to state 82
+
+
+state 55
+
+    (13) statement -> FOR var_assign TO . expr { init }
+    (35) expr -> . ID ( expr_list )
+    (36) expr -> . LEN ( expr )
+    (37) expr -> . POP ( ID )
+    (38) expr -> . STRING
+    (39) expr -> . FLOAT
+    (40) expr -> . NUMBER
+    (41) expr -> . ID [ expr ]
+    (42) expr -> . ID
+    (43) expr -> . ( expr )
+    (44) expr -> . - expr
+    (45) expr -> . expr % expr
+    (46) expr -> . expr / expr
+    (47) expr -> . expr * expr
+    (48) expr -> . expr - expr
+    (49) expr -> . expr + expr
+    ID              shift and go to state 16
+    LEN             shift and go to state 18
+    POP             shift and go to state 19
+    STRING          shift and go to state 20
+    FLOAT           shift and go to state 21
+    NUMBER          shift and go to state 22
+    (               shift and go to state 17
+    -               shift and go to state 23
+
+    expr                           shift and go to state 83
+
+state 56
+
+    (14) if_else -> IF condition { . init } el_if
+    (1) init -> .
+    (2) init -> . statement
+    (3) init -> . init statement
+    (4) statement -> . RETURN expr
+    (5) statement -> . PUSH ( ID , expr )
+    (6) statement -> . POP ( ID )
+    (7) statement -> . var_assign
+    (8) statement -> . PRINT ( expr )
+    (9) statement -> . ID ( expr_list )
+    (10) statement -> . FUNC ID ( id_list ) { init }
+    (11) statement -> . if_else
+    (12) statement -> . FOREACH ID IN ID { init }
+    (13) statement -> . FOR var_assign TO expr { init }
+    (24) var_assign -> . ID ASSIGN [ list_generate ]
+    (25) var_assign -> . ID ASSIGN expr
+    (14) if_else -> . IF condition { init } el_if
+  ! shift/reduce conflict for RETURN resolved as shift
+  ! shift/reduce conflict for PUSH resolved as shift
+  ! shift/reduce conflict for POP resolved as shift
+  ! shift/reduce conflict for PRINT resolved as shift
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for FUNC resolved as shift
+  ! shift/reduce conflict for FOREACH resolved as shift
+  ! shift/reduce conflict for FOR resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+    }               reduce using rule 1 (init -> .)
+    RETURN          shift and go to state 3
+    PUSH            shift and go to state 4
+    POP             shift and go to state 6
+    PRINT           shift and go to state 8
+    ID              shift and go to state 5
+    FUNC            shift and go to state 9
+    FOREACH         shift and go to state 11
+    FOR             shift and go to state 12
+    IF              shift and go to state 13
+
+    init                           shift and go to state 84
+    statement                      shift and go to state 2
+    var_assign                     shift and go to state 7
+    if_else                        shift and go to state 10
+
+state 57
+
+    (18) condition -> expr SMEQ . expr
+    (35) expr -> . ID ( expr_list )
+    (36) expr -> . LEN ( expr )
+    (37) expr -> . POP ( ID )
+    (38) expr -> . STRING
+    (39) expr -> . FLOAT
+    (40) expr -> . NUMBER
+    (41) expr -> . ID [ expr ]
+    (42) expr -> . ID
+    (43) expr -> . ( expr )
+    (44) expr -> . - expr
+    (45) expr -> . expr % expr
+    (46) expr -> . expr / expr
+    (47) expr -> . expr * expr
+    (48) expr -> . expr - expr
+    (49) expr -> . expr + expr
+    ID              shift and go to state 16
+    LEN             shift and go to state 18
+    POP             shift and go to state 19
+    STRING          shift and go to state 20
+    FLOAT           shift and go to state 21
+    NUMBER          shift and go to state 22
+    (               shift and go to state 17
+    -               shift and go to state 23
+
+    expr                           shift and go to state 85
+
+state 58
+
+    (19) condition -> expr GREQ . expr
+    (35) expr -> . ID ( expr_list )
+    (36) expr -> . LEN ( expr )
+    (37) expr -> . POP ( ID )
+    (38) expr -> . STRING
+    (39) expr -> . FLOAT
+    (40) expr -> . NUMBER
+    (41) expr -> . ID [ expr ]
+    (42) expr -> . ID
+    (43) expr -> . ( expr )
+    (44) expr -> . - expr
+    (45) expr -> . expr % expr
+    (46) expr -> . expr / expr
+    (47) expr -> . expr * expr
+    (48) expr -> . expr - expr
+    (49) expr -> . expr + expr
+    ID              shift and go to state 16
+    LEN             shift and go to state 18
+    POP             shift and go to state 19
+    STRING          shift and go to state 20
+    FLOAT           shift and go to state 21
+    NUMBER          shift and go to state 22
+    (               shift and go to state 17
+    -               shift and go to state 23
+
+    expr                           shift and go to state 86
+
+state 59
+
+    (20) condition -> expr SMT . expr
+    (35) expr -> . ID ( expr_list )
+    (36) expr -> . LEN ( expr )
+    (37) expr -> . POP ( ID )
+    (38) expr -> . STRING
+    (39) expr -> . FLOAT
+    (40) expr -> . NUMBER
+    (41) expr -> . ID [ expr ]
+    (42) expr -> . ID
+    (43) expr -> . ( expr )
+    (44) expr -> . - expr
+    (45) expr -> . expr % expr
+    (46) expr -> . expr / expr
+    (47) expr -> . expr * expr
+    (48) expr -> . expr - expr
+    (49) expr -> . expr + expr
+    ID              shift and go to state 16
+    LEN             shift and go to state 18
+    POP             shift and go to state 19
+    STRING          shift and go to state 20
+    FLOAT           shift and go to state 21
+    NUMBER          shift and go to state 22
+    (               shift and go to state 17
+    -               shift and go to state 23
+
+    expr                           shift and go to state 87
+
+state 60
+
+    (21) condition -> expr GRT . expr
+    (35) expr -> . ID ( expr_list )
+    (36) expr -> . LEN ( expr )
+    (37) expr -> . POP ( ID )
+    (38) expr -> . STRING
+    (39) expr -> . FLOAT
+    (40) expr -> . NUMBER
+    (41) expr -> . ID [ expr ]
+    (42) expr -> . ID
+    (43) expr -> . ( expr )
+    (44) expr -> . - expr
+    (45) expr -> . expr % expr
+    (46) expr -> . expr / expr
+    (47) expr -> . expr * expr
+    (48) expr -> . expr - expr
+    (49) expr -> . expr + expr
+    ID              shift and go to state 16
+    LEN             shift and go to state 18
+    POP             shift and go to state 19
+    STRING          shift and go to state 20
+    FLOAT           shift and go to state 21
+    NUMBER          shift and go to state 22
+    (               shift and go to state 17
+    -               shift and go to state 23
+
+    expr                           shift and go to state 88
+
+state 61
+
+    (22) condition -> expr NEQUAL . expr
+    (35) expr -> . ID ( expr_list )
+    (36) expr -> . LEN ( expr )
+    (37) expr -> . POP ( ID )
+    (38) expr -> . STRING
+    (39) expr -> . FLOAT
+    (40) expr -> . NUMBER
+    (41) expr -> . ID [ expr ]
+    (42) expr -> . ID
+    (43) expr -> . ( expr )
+    (44) expr -> . - expr
+    (45) expr -> . expr % expr
+    (46) expr -> . expr / expr
+    (47) expr -> . expr * expr
+    (48) expr -> . expr - expr
+    (49) expr -> . expr + expr
+    ID              shift and go to state 16
+    LEN             shift and go to state 18
+    POP             shift and go to state 19
+    STRING          shift and go to state 20
+    FLOAT           shift and go to state 21
+    NUMBER          shift and go to state 22
+    (               shift and go to state 17
+    -               shift and go to state 23
+
+    expr                           shift and go to state 89
+
+state 62
+
+    (23) condition -> expr EQUAL . expr
+    (35) expr -> . ID ( expr_list )
+    (36) expr -> . LEN ( expr )
+    (37) expr -> . POP ( ID )
+    (38) expr -> . STRING
+    (39) expr -> . FLOAT
+    (40) expr -> . NUMBER
+    (41) expr -> . ID [ expr ]
+    (42) expr -> . ID
+    (43) expr -> . ( expr )
+    (44) expr -> . - expr
+    (45) expr -> . expr % expr
+    (46) expr -> . expr / expr
+    (47) expr -> . expr * expr
+    (48) expr -> . expr - expr
+    (49) expr -> . expr + expr
+    ID              shift and go to state 16
+    LEN             shift and go to state 18
+    POP             shift and go to state 19
+    STRING          shift and go to state 20
+    FLOAT           shift and go to state 21
+    NUMBER          shift and go to state 22
+    (               shift and go to state 17
+    -               shift and go to state 23
+
+    expr                           shift and go to state 90
+
+state 63
+
+    (45) expr -> expr % expr .
+    (45) expr -> expr . % expr
+    (46) expr -> expr . / expr
+    (47) expr -> expr . * expr
+    (48) expr -> expr . - expr
+    (49) expr -> expr . + expr
+  ! shift/reduce conflict for % resolved as shift
+  ! shift/reduce conflict for / resolved as shift
+  ! shift/reduce conflict for * resolved as shift
+  ! shift/reduce conflict for - resolved as shift
+  ! shift/reduce conflict for + resolved as shift
+    RETURN          reduce using rule 45 (expr -> expr % expr .)
+    PUSH            reduce using rule 45 (expr -> expr % expr .)
+    POP             reduce using rule 45 (expr -> expr % expr .)
+    PRINT           reduce using rule 45 (expr -> expr % expr .)
+    ID              reduce using rule 45 (expr -> expr % expr .)
+    FUNC            reduce using rule 45 (expr -> expr % expr .)
+    FOREACH         reduce using rule 45 (expr -> expr % expr .)
+    FOR             reduce using rule 45 (expr -> expr % expr .)
+    IF              reduce using rule 45 (expr -> expr % expr .)
+    $end            reduce using rule 45 (expr -> expr % expr .)
+    }               reduce using rule 45 (expr -> expr % expr .)
+    SMEQ            reduce using rule 45 (expr -> expr % expr .)
+    GREQ            reduce using rule 45 (expr -> expr % expr .)
+    SMT             reduce using rule 45 (expr -> expr % expr .)
+    GRT             reduce using rule 45 (expr -> expr % expr .)
+    NEQUAL          reduce using rule 45 (expr -> expr % expr .)
+    EQUAL           reduce using rule 45 (expr -> expr % expr .)
+    )               reduce using rule 45 (expr -> expr % expr .)
+    ,               reduce using rule 45 (expr -> expr % expr .)
+    TO              reduce using rule 45 (expr -> expr % expr .)
+    ]               reduce using rule 45 (expr -> expr % expr .)
+    {               reduce using rule 45 (expr -> expr % expr .)
+    %               shift and go to state 35
+    /               shift and go to state 36
+    *               shift and go to state 37
+    -               shift and go to state 38
+    +               shift and go to state 39
+
+
+state 64
+
+    (46) expr -> expr / expr .
+    (45) expr -> expr . % expr
+    (46) expr -> expr . / expr
+    (47) expr -> expr . * expr
+    (48) expr -> expr . - expr
+    (49) expr -> expr . + expr
+    %               reduce using rule 46 (expr -> expr / expr .)
+    /               reduce using rule 46 (expr -> expr / expr .)
+    *               reduce using rule 46 (expr -> expr / expr .)
+    -               reduce using rule 46 (expr -> expr / expr .)
+    +               reduce using rule 46 (expr -> expr / expr .)
+    RETURN          reduce using rule 46 (expr -> expr / expr .)
+    PUSH            reduce using rule 46 (expr -> expr / expr .)
+    POP             reduce using rule 46 (expr -> expr / expr .)
+    PRINT           reduce using rule 46 (expr -> expr / expr .)
+    ID              reduce using rule 46 (expr -> expr / expr .)
+    FUNC            reduce using rule 46 (expr -> expr / expr .)
+    FOREACH         reduce using rule 46 (expr -> expr / expr .)
+    FOR             reduce using rule 46 (expr -> expr / expr .)
+    IF              reduce using rule 46 (expr -> expr / expr .)
+    $end            reduce using rule 46 (expr -> expr / expr .)
+    }               reduce using rule 46 (expr -> expr / expr .)
+    SMEQ            reduce using rule 46 (expr -> expr / expr .)
+    GREQ            reduce using rule 46 (expr -> expr / expr .)
+    SMT             reduce using rule 46 (expr -> expr / expr .)
+    GRT             reduce using rule 46 (expr -> expr / expr .)
+    NEQUAL          reduce using rule 46 (expr -> expr / expr .)
+    EQUAL           reduce using rule 46 (expr -> expr / expr .)
+    )               reduce using rule 46 (expr -> expr / expr .)
+    ,               reduce using rule 46 (expr -> expr / expr .)
+    TO              reduce using rule 46 (expr -> expr / expr .)
+    ]               reduce using rule 46 (expr -> expr / expr .)
+    {               reduce using rule 46 (expr -> expr / expr .)
+
+
+state 65
+
+    (47) expr -> expr * expr .
+    (45) expr -> expr . % expr
+    (46) expr -> expr . / expr
+    (47) expr -> expr . * expr
+    (48) expr -> expr . - expr
+    (49) expr -> expr . + expr
+    %               reduce using rule 47 (expr -> expr * expr .)
+    /               reduce using rule 47 (expr -> expr * expr .)
+    *               reduce using rule 47 (expr -> expr * expr .)
+    -               reduce using rule 47 (expr -> expr * expr .)
+    +               reduce using rule 47 (expr -> expr * expr .)
+    RETURN          reduce using rule 47 (expr -> expr * expr .)
+    PUSH            reduce using rule 47 (expr -> expr * expr .)
+    POP             reduce using rule 47 (expr -> expr * expr .)
+    PRINT           reduce using rule 47 (expr -> expr * expr .)
+    ID              reduce using rule 47 (expr -> expr * expr .)
+    FUNC            reduce using rule 47 (expr -> expr * expr .)
+    FOREACH         reduce using rule 47 (expr -> expr * expr .)
+    FOR             reduce using rule 47 (expr -> expr * expr .)
+    IF              reduce using rule 47 (expr -> expr * expr .)
+    $end            reduce using rule 47 (expr -> expr * expr .)
+    }               reduce using rule 47 (expr -> expr * expr .)
+    SMEQ            reduce using rule 47 (expr -> expr * expr .)
+    GREQ            reduce using rule 47 (expr -> expr * expr .)
+    SMT             reduce using rule 47 (expr -> expr * expr .)
+    GRT             reduce using rule 47 (expr -> expr * expr .)
+    NEQUAL          reduce using rule 47 (expr -> expr * expr .)
+    EQUAL           reduce using rule 47 (expr -> expr * expr .)
+    )               reduce using rule 47 (expr -> expr * expr .)
+    ,               reduce using rule 47 (expr -> expr * expr .)
+    TO              reduce using rule 47 (expr -> expr * expr .)
+    ]               reduce using rule 47 (expr -> expr * expr .)
+    {               reduce using rule 47 (expr -> expr * expr .)
+
+
+state 66
+
+    (48) expr -> expr - expr .
+    (45) expr -> expr . % expr
+    (46) expr -> expr . / expr
+    (47) expr -> expr . * expr
+    (48) expr -> expr . - expr
+    (49) expr -> expr . + expr
+    %               reduce using rule 48 (expr -> expr - expr .)
+    -               reduce using rule 48 (expr -> expr - expr .)
+    +               reduce using rule 48 (expr -> expr - expr .)
+    RETURN          reduce using rule 48 (expr -> expr - expr .)
+    PUSH            reduce using rule 48 (expr -> expr - expr .)
+    POP             reduce using rule 48 (expr -> expr - expr .)
+    PRINT           reduce using rule 48 (expr -> expr - expr .)
+    ID              reduce using rule 48 (expr -> expr - expr .)
+    FUNC            reduce using rule 48 (expr -> expr - expr .)
+    FOREACH         reduce using rule 48 (expr -> expr - expr .)
+    FOR             reduce using rule 48 (expr -> expr - expr .)
+    IF              reduce using rule 48 (expr -> expr - expr .)
+    $end            reduce using rule 48 (expr -> expr - expr .)
+    }               reduce using rule 48 (expr -> expr - expr .)
+    SMEQ            reduce using rule 48 (expr -> expr - expr .)
+    GREQ            reduce using rule 48 (expr -> expr - expr .)
+    SMT             reduce using rule 48 (expr -> expr - expr .)
+    GRT             reduce using rule 48 (expr -> expr - expr .)
+    NEQUAL          reduce using rule 48 (expr -> expr - expr .)
+    EQUAL           reduce using rule 48 (expr -> expr - expr .)
+    )               reduce using rule 48 (expr -> expr - expr .)
+    ,               reduce using rule 48 (expr -> expr - expr .)
+    TO              reduce using rule 48 (expr -> expr - expr .)
+    ]               reduce using rule 48 (expr -> expr - expr .)
+    {               reduce using rule 48 (expr -> expr - expr .)
+    /               shift and go to state 36
+    *               shift and go to state 37
+
+
+state 67
+
+    (49) expr -> expr + expr .
+    (45) expr -> expr . % expr
+    (46) expr -> expr . / expr
+    (47) expr -> expr . * expr
+    (48) expr -> expr . - expr
+    (49) expr -> expr . + expr
+    %               reduce using rule 49 (expr -> expr + expr .)
+    -               reduce using rule 49 (expr -> expr + expr .)
+    +               reduce using rule 49 (expr -> expr + expr .)
+    RETURN          reduce using rule 49 (expr -> expr + expr .)
+    PUSH            reduce using rule 49 (expr -> expr + expr .)
+    POP             reduce using rule 49 (expr -> expr + expr .)
+    PRINT           reduce using rule 49 (expr -> expr + expr .)
+    ID              reduce using rule 49 (expr -> expr + expr .)
+    FUNC            reduce using rule 49 (expr -> expr + expr .)
+    FOREACH         reduce using rule 49 (expr -> expr + expr .)
+    FOR             reduce using rule 49 (expr -> expr + expr .)
+    IF              reduce using rule 49 (expr -> expr + expr .)
+    $end            reduce using rule 49 (expr -> expr + expr .)
+    }               reduce using rule 49 (expr -> expr + expr .)
+    SMEQ            reduce using rule 49 (expr -> expr + expr .)
+    GREQ            reduce using rule 49 (expr -> expr + expr .)
+    SMT             reduce using rule 49 (expr -> expr + expr .)
+    GRT             reduce using rule 49 (expr -> expr + expr .)
+    NEQUAL          reduce using rule 49 (expr -> expr + expr .)
+    EQUAL           reduce using rule 49 (expr -> expr + expr .)
+    )               reduce using rule 49 (expr -> expr + expr .)
+    ,               reduce using rule 49 (expr -> expr + expr .)
+    TO              reduce using rule 49 (expr -> expr + expr .)
+    ]               reduce using rule 49 (expr -> expr + expr .)
+    {               reduce using rule 49 (expr -> expr + expr .)
+    /               shift and go to state 36
+    *               shift and go to state 37
+
+
+state 68
+
+    (35) expr -> ID ( expr_list . )
+    )               shift and go to state 91
+
+
+state 69
+
+    (41) expr -> ID [ expr . ]
+    (45) expr -> expr . % expr
+    (46) expr -> expr . / expr
+    (47) expr -> expr . * expr
+    (48) expr -> expr . - expr
+    (49) expr -> expr . + expr
+    ]               shift and go to state 92
+    %               shift and go to state 35
+    /               shift and go to state 36
+    *               shift and go to state 37
+    -               shift and go to state 38
+    +               shift and go to state 39
+
+
+state 70
+
+    (43) expr -> ( expr ) .
+    %               reduce using rule 43 (expr -> ( expr ) .)
+    /               reduce using rule 43 (expr -> ( expr ) .)
+    *               reduce using rule 43 (expr -> ( expr ) .)
+    -               reduce using rule 43 (expr -> ( expr ) .)
+    +               reduce using rule 43 (expr -> ( expr ) .)
+    RETURN          reduce using rule 43 (expr -> ( expr ) .)
+    PUSH            reduce using rule 43 (expr -> ( expr ) .)
+    POP             reduce using rule 43 (expr -> ( expr ) .)
+    PRINT           reduce using rule 43 (expr -> ( expr ) .)
+    ID              reduce using rule 43 (expr -> ( expr ) .)
+    FUNC            reduce using rule 43 (expr -> ( expr ) .)
+    FOREACH         reduce using rule 43 (expr -> ( expr ) .)
+    FOR             reduce using rule 43 (expr -> ( expr ) .)
+    IF              reduce using rule 43 (expr -> ( expr ) .)
+    $end            reduce using rule 43 (expr -> ( expr ) .)
+    }               reduce using rule 43 (expr -> ( expr ) .)
+    SMEQ            reduce using rule 43 (expr -> ( expr ) .)
+    GREQ            reduce using rule 43 (expr -> ( expr ) .)
+    SMT             reduce using rule 43 (expr -> ( expr ) .)
+    GRT             reduce using rule 43 (expr -> ( expr ) .)
+    NEQUAL          reduce using rule 43 (expr -> ( expr ) .)
+    EQUAL           reduce using rule 43 (expr -> ( expr ) .)
+    )               reduce using rule 43 (expr -> ( expr ) .)
+    ,               reduce using rule 43 (expr -> ( expr ) .)
+    TO              reduce using rule 43 (expr -> ( expr ) .)
+    ]               reduce using rule 43 (expr -> ( expr ) .)
+    {               reduce using rule 43 (expr -> ( expr ) .)
+
+
+state 71
+
+    (36) expr -> LEN ( expr . )
+    (45) expr -> expr . % expr
+    (46) expr -> expr . / expr
+    (47) expr -> expr . * expr
+    (48) expr -> expr . - expr
+    (49) expr -> expr . + expr
+    )               shift and go to state 93
+    %               shift and go to state 35
+    /               shift and go to state 36
+    *               shift and go to state 37
+    -               shift and go to state 38
+    +               shift and go to state 39
+
+
+state 72
+
+    (37) expr -> POP ( ID . )
+    )               shift and go to state 94
+
+
+state 73
+
+    (5) statement -> PUSH ( ID , . expr )
+    (35) expr -> . ID ( expr_list )
+    (36) expr -> . LEN ( expr )
+    (37) expr -> . POP ( ID )
+    (38) expr -> . STRING
+    (39) expr -> . FLOAT
+    (40) expr -> . NUMBER
+    (41) expr -> . ID [ expr ]
+    (42) expr -> . ID
+    (43) expr -> . ( expr )
+    (44) expr -> . - expr
+    (45) expr -> . expr % expr
+    (46) expr -> . expr / expr
+    (47) expr -> . expr * expr
+    (48) expr -> . expr - expr
+    (49) expr -> . expr + expr
+    ID              shift and go to state 16
+    LEN             shift and go to state 18
+    POP             shift and go to state 19
+    STRING          shift and go to state 20
+    FLOAT           shift and go to state 21
+    NUMBER          shift and go to state 22
+    (               shift and go to state 17
+    -               shift and go to state 23
+
+    expr                           shift and go to state 95
+
+state 74
+
+    (9) statement -> ID ( expr_list ) .
+    RETURN          reduce using rule 9 (statement -> ID ( expr_list ) .)
+    PUSH            reduce using rule 9 (statement -> ID ( expr_list ) .)
+    POP             reduce using rule 9 (statement -> ID ( expr_list ) .)
+    PRINT           reduce using rule 9 (statement -> ID ( expr_list ) .)
+    ID              reduce using rule 9 (statement -> ID ( expr_list ) .)
+    FUNC            reduce using rule 9 (statement -> ID ( expr_list ) .)
+    FOREACH         reduce using rule 9 (statement -> ID ( expr_list ) .)
+    FOR             reduce using rule 9 (statement -> ID ( expr_list ) .)
+    IF              reduce using rule 9 (statement -> ID ( expr_list ) .)
+    $end            reduce using rule 9 (statement -> ID ( expr_list ) .)
+    }               reduce using rule 9 (statement -> ID ( expr_list ) .)
+
+
+state 75
+
+    (34) expr_list -> expr , . expr_list
+    (32) expr_list -> .
+    (33) expr_list -> . expr
+    (34) expr_list -> . expr , expr_list
+    (35) expr -> . ID ( expr_list )
+    (36) expr -> . LEN ( expr )
+    (37) expr -> . POP ( ID )
+    (38) expr -> . STRING
+    (39) expr -> . FLOAT
+    (40) expr -> . NUMBER
+    (41) expr -> . ID [ expr ]
+    (42) expr -> . ID
+    (43) expr -> . ( expr )
+    (44) expr -> . - expr
+    (45) expr -> . expr % expr
+    (46) expr -> . expr / expr
+    (47) expr -> . expr * expr
+    (48) expr -> . expr - expr
+    (49) expr -> . expr + expr
+    )               reduce using rule 32 (expr_list -> .)
+    ID              shift and go to state 16
+    LEN             shift and go to state 18
+    POP             shift and go to state 19
+    STRING          shift and go to state 20
+    FLOAT           shift and go to state 21
+    NUMBER          shift and go to state 22
+    (               shift and go to state 17
+    -               shift and go to state 23
+
+    expr                           shift and go to state 48
+    expr_list                      shift and go to state 96
+
+state 76
+
+    (24) var_assign -> ID ASSIGN [ list_generate . ]
+    ]               shift and go to state 97
+
+
+state 77
+
+    (30) list_generate -> expr .
+    (31) list_generate -> expr . , list_generate
+    (45) expr -> expr . % expr
+    (46) expr -> expr . / expr
+    (47) expr -> expr . * expr
+    (48) expr -> expr . - expr
+    (49) expr -> expr . + expr
+    ]               reduce using rule 30 (list_generate -> expr .)
+    ,               shift and go to state 98
+    %               shift and go to state 35
+    /               shift and go to state 36
+    *               shift and go to state 37
+    -               shift and go to state 38
+    +               shift and go to state 39
+
+
+state 78
+
+    (6) statement -> POP ( ID ) .
+    RETURN          reduce using rule 6 (statement -> POP ( ID ) .)
+    PUSH            reduce using rule 6 (statement -> POP ( ID ) .)
+    POP             reduce using rule 6 (statement -> POP ( ID ) .)
+    PRINT           reduce using rule 6 (statement -> POP ( ID ) .)
+    ID              reduce using rule 6 (statement -> POP ( ID ) .)
+    FUNC            reduce using rule 6 (statement -> POP ( ID ) .)
+    FOREACH         reduce using rule 6 (statement -> POP ( ID ) .)
+    FOR             reduce using rule 6 (statement -> POP ( ID ) .)
+    IF              reduce using rule 6 (statement -> POP ( ID ) .)
+    $end            reduce using rule 6 (statement -> POP ( ID ) .)
+    }               reduce using rule 6 (statement -> POP ( ID ) .)
+
+
+state 79
+
+    (8) statement -> PRINT ( expr ) .
+    RETURN          reduce using rule 8 (statement -> PRINT ( expr ) .)
+    PUSH            reduce using rule 8 (statement -> PRINT ( expr ) .)
+    POP             reduce using rule 8 (statement -> PRINT ( expr ) .)
+    PRINT           reduce using rule 8 (statement -> PRINT ( expr ) .)
+    ID              reduce using rule 8 (statement -> PRINT ( expr ) .)
+    FUNC            reduce using rule 8 (statement -> PRINT ( expr ) .)
+    FOREACH         reduce using rule 8 (statement -> PRINT ( expr ) .)
+    FOR             reduce using rule 8 (statement -> PRINT ( expr ) .)
+    IF              reduce using rule 8 (statement -> PRINT ( expr ) .)
+    $end            reduce using rule 8 (statement -> PRINT ( expr ) .)
+    }               reduce using rule 8 (statement -> PRINT ( expr ) .)
+
+
+state 80
+
+    (27) id_list -> ID .
+    (28) id_list -> ID . , id_list
+    )               reduce using rule 27 (id_list -> ID .)
+    ,               shift and go to state 99
+
+
+state 81
+
+    (10) statement -> FUNC ID ( id_list . ) { init }
+    )               shift and go to state 100
+
+
+state 82
+
+    (12) statement -> FOREACH ID IN ID . { init }
+    {               shift and go to state 101
+
+
+state 83
+
+    (13) statement -> FOR var_assign TO expr . { init }
+    (45) expr -> expr . % expr
+    (46) expr -> expr . / expr
+    (47) expr -> expr . * expr
+    (48) expr -> expr . - expr
+    (49) expr -> expr . + expr
+    {               shift and go to state 102
+    %               shift and go to state 35
+    /               shift and go to state 36
+    *               shift and go to state 37
+    -               shift and go to state 38
+    +               shift and go to state 39
+
+
+state 84
+
+    (14) if_else -> IF condition { init . } el_if
+    (3) init -> init . statement
+    (4) statement -> . RETURN expr
+    (5) statement -> . PUSH ( ID , expr )
+    (6) statement -> . POP ( ID )
+    (7) statement -> . var_assign
+    (8) statement -> . PRINT ( expr )
+    (9) statement -> . ID ( expr_list )
+    (10) statement -> . FUNC ID ( id_list ) { init }
+    (11) statement -> . if_else
+    (12) statement -> . FOREACH ID IN ID { init }
+    (13) statement -> . FOR var_assign TO expr { init }
+    (24) var_assign -> . ID ASSIGN [ list_generate ]
+    (25) var_assign -> . ID ASSIGN expr
+    (14) if_else -> . IF condition { init } el_if
+    }               shift and go to state 103
+    RETURN          shift and go to state 3
+    PUSH            shift and go to state 4
+    POP             shift and go to state 6
+    PRINT           shift and go to state 8
+    ID              shift and go to state 5
+    FUNC            shift and go to state 9
+    FOREACH         shift and go to state 11
+    FOR             shift and go to state 12
+    IF              shift and go to state 13
+
+    statement                      shift and go to state 14
+    var_assign                     shift and go to state 7
+    if_else                        shift and go to state 10
+
+state 85
+
+    (18) condition -> expr SMEQ expr .
+    (45) expr -> expr . % expr
+    (46) expr -> expr . / expr
+    (47) expr -> expr . * expr
+    (48) expr -> expr . - expr
+    (49) expr -> expr . + expr
+    {               reduce using rule 18 (condition -> expr SMEQ expr .)
+    %               shift and go to state 35
+    /               shift and go to state 36
+    *               shift and go to state 37
+    -               shift and go to state 38
+    +               shift and go to state 39
+
+
+state 86
+
+    (19) condition -> expr GREQ expr .
+    (45) expr -> expr . % expr
+    (46) expr -> expr . / expr
+    (47) expr -> expr . * expr
+    (48) expr -> expr . - expr
+    (49) expr -> expr . + expr
+    {               reduce using rule 19 (condition -> expr GREQ expr .)
+    %               shift and go to state 35
+    /               shift and go to state 36
+    *               shift and go to state 37
+    -               shift and go to state 38
+    +               shift and go to state 39
+
+
+state 87
+
+    (20) condition -> expr SMT expr .
+    (45) expr -> expr . % expr
+    (46) expr -> expr . / expr
+    (47) expr -> expr . * expr
+    (48) expr -> expr . - expr
+    (49) expr -> expr . + expr
+    {               reduce using rule 20 (condition -> expr SMT expr .)
+    %               shift and go to state 35
+    /               shift and go to state 36
+    *               shift and go to state 37
+    -               shift and go to state 38
+    +               shift and go to state 39
+
+
+state 88
+
+    (21) condition -> expr GRT expr .
+    (45) expr -> expr . % expr
+    (46) expr -> expr . / expr
+    (47) expr -> expr . * expr
+    (48) expr -> expr . - expr
+    (49) expr -> expr . + expr
+    {               reduce using rule 21 (condition -> expr GRT expr .)
+    %               shift and go to state 35
+    /               shift and go to state 36
+    *               shift and go to state 37
+    -               shift and go to state 38
+    +               shift and go to state 39
+
+
+state 89
+
+    (22) condition -> expr NEQUAL expr .
+    (45) expr -> expr . % expr
+    (46) expr -> expr . / expr
+    (47) expr -> expr . * expr
+    (48) expr -> expr . - expr
+    (49) expr -> expr . + expr
+    {               reduce using rule 22 (condition -> expr NEQUAL expr .)
+    %               shift and go to state 35
+    /               shift and go to state 36
+    *               shift and go to state 37
+    -               shift and go to state 38
+    +               shift and go to state 39
+
+
+state 90
+
+    (23) condition -> expr EQUAL expr .
+    (45) expr -> expr . % expr
+    (46) expr -> expr . / expr
+    (47) expr -> expr . * expr
+    (48) expr -> expr . - expr
+    (49) expr -> expr . + expr
+    {               reduce using rule 23 (condition -> expr EQUAL expr .)
+    %               shift and go to state 35
+    /               shift and go to state 36
+    *               shift and go to state 37
+    -               shift and go to state 38
+    +               shift and go to state 39
+
+
+state 91
+
+    (35) expr -> ID ( expr_list ) .
+    %               reduce using rule 35 (expr -> ID ( expr_list ) .)
+    /               reduce using rule 35 (expr -> ID ( expr_list ) .)
+    *               reduce using rule 35 (expr -> ID ( expr_list ) .)
+    -               reduce using rule 35 (expr -> ID ( expr_list ) .)
+    +               reduce using rule 35 (expr -> ID ( expr_list ) .)
+    RETURN          reduce using rule 35 (expr -> ID ( expr_list ) .)
+    PUSH            reduce using rule 35 (expr -> ID ( expr_list ) .)
+    POP             reduce using rule 35 (expr -> ID ( expr_list ) .)
+    PRINT           reduce using rule 35 (expr -> ID ( expr_list ) .)
+    ID              reduce using rule 35 (expr -> ID ( expr_list ) .)
+    FUNC            reduce using rule 35 (expr -> ID ( expr_list ) .)
+    FOREACH         reduce using rule 35 (expr -> ID ( expr_list ) .)
+    FOR             reduce using rule 35 (expr -> ID ( expr_list ) .)
+    IF              reduce using rule 35 (expr -> ID ( expr_list ) .)
+    $end            reduce using rule 35 (expr -> ID ( expr_list ) .)
+    }               reduce using rule 35 (expr -> ID ( expr_list ) .)
+    SMEQ            reduce using rule 35 (expr -> ID ( expr_list ) .)
+    GREQ            reduce using rule 35 (expr -> ID ( expr_list ) .)
+    SMT             reduce using rule 35 (expr -> ID ( expr_list ) .)
+    GRT             reduce using rule 35 (expr -> ID ( expr_list ) .)
+    NEQUAL          reduce using rule 35 (expr -> ID ( expr_list ) .)
+    EQUAL           reduce using rule 35 (expr -> ID ( expr_list ) .)
+    )               reduce using rule 35 (expr -> ID ( expr_list ) .)
+    ,               reduce using rule 35 (expr -> ID ( expr_list ) .)
+    TO              reduce using rule 35 (expr -> ID ( expr_list ) .)
+    ]               reduce using rule 35 (expr -> ID ( expr_list ) .)
+    {               reduce using rule 35 (expr -> ID ( expr_list ) .)
+
+
+state 92
+
+    (41) expr -> ID [ expr ] .
+    %               reduce using rule 41 (expr -> ID [ expr ] .)
+    /               reduce using rule 41 (expr -> ID [ expr ] .)
+    *               reduce using rule 41 (expr -> ID [ expr ] .)
+    -               reduce using rule 41 (expr -> ID [ expr ] .)
+    +               reduce using rule 41 (expr -> ID [ expr ] .)
+    RETURN          reduce using rule 41 (expr -> ID [ expr ] .)
+    PUSH            reduce using rule 41 (expr -> ID [ expr ] .)
+    POP             reduce using rule 41 (expr -> ID [ expr ] .)
+    PRINT           reduce using rule 41 (expr -> ID [ expr ] .)
+    ID              reduce using rule 41 (expr -> ID [ expr ] .)
+    FUNC            reduce using rule 41 (expr -> ID [ expr ] .)
+    FOREACH         reduce using rule 41 (expr -> ID [ expr ] .)
+    FOR             reduce using rule 41 (expr -> ID [ expr ] .)
+    IF              reduce using rule 41 (expr -> ID [ expr ] .)
+    $end            reduce using rule 41 (expr -> ID [ expr ] .)
+    }               reduce using rule 41 (expr -> ID [ expr ] .)
+    SMEQ            reduce using rule 41 (expr -> ID [ expr ] .)
+    GREQ            reduce using rule 41 (expr -> ID [ expr ] .)
+    SMT             reduce using rule 41 (expr -> ID [ expr ] .)
+    GRT             reduce using rule 41 (expr -> ID [ expr ] .)
+    NEQUAL          reduce using rule 41 (expr -> ID [ expr ] .)
+    EQUAL           reduce using rule 41 (expr -> ID [ expr ] .)
+    )               reduce using rule 41 (expr -> ID [ expr ] .)
+    ,               reduce using rule 41 (expr -> ID [ expr ] .)
+    TO              reduce using rule 41 (expr -> ID [ expr ] .)
+    ]               reduce using rule 41 (expr -> ID [ expr ] .)
+    {               reduce using rule 41 (expr -> ID [ expr ] .)
+
+
+state 93
+
+    (36) expr -> LEN ( expr ) .
+    %               reduce using rule 36 (expr -> LEN ( expr ) .)
+    /               reduce using rule 36 (expr -> LEN ( expr ) .)
+    *               reduce using rule 36 (expr -> LEN ( expr ) .)
+    -               reduce using rule 36 (expr -> LEN ( expr ) .)
+    +               reduce using rule 36 (expr -> LEN ( expr ) .)
+    RETURN          reduce using rule 36 (expr -> LEN ( expr ) .)
+    PUSH            reduce using rule 36 (expr -> LEN ( expr ) .)
+    POP             reduce using rule 36 (expr -> LEN ( expr ) .)
+    PRINT           reduce using rule 36 (expr -> LEN ( expr ) .)
+    ID              reduce using rule 36 (expr -> LEN ( expr ) .)
+    FUNC            reduce using rule 36 (expr -> LEN ( expr ) .)
+    FOREACH         reduce using rule 36 (expr -> LEN ( expr ) .)
+    FOR             reduce using rule 36 (expr -> LEN ( expr ) .)
+    IF              reduce using rule 36 (expr -> LEN ( expr ) .)
+    $end            reduce using rule 36 (expr -> LEN ( expr ) .)
+    }               reduce using rule 36 (expr -> LEN ( expr ) .)
+    SMEQ            reduce using rule 36 (expr -> LEN ( expr ) .)
+    GREQ            reduce using rule 36 (expr -> LEN ( expr ) .)
+    SMT             reduce using rule 36 (expr -> LEN ( expr ) .)
+    GRT             reduce using rule 36 (expr -> LEN ( expr ) .)
+    NEQUAL          reduce using rule 36 (expr -> LEN ( expr ) .)
+    EQUAL           reduce using rule 36 (expr -> LEN ( expr ) .)
+    )               reduce using rule 36 (expr -> LEN ( expr ) .)
+    ,               reduce using rule 36 (expr -> LEN ( expr ) .)
+    TO              reduce using rule 36 (expr -> LEN ( expr ) .)
+    ]               reduce using rule 36 (expr -> LEN ( expr ) .)
+    {               reduce using rule 36 (expr -> LEN ( expr ) .)
+
+
+state 94
+
+    (37) expr -> POP ( ID ) .
+    %               reduce using rule 37 (expr -> POP ( ID ) .)
+    /               reduce using rule 37 (expr -> POP ( ID ) .)
+    *               reduce using rule 37 (expr -> POP ( ID ) .)
+    -               reduce using rule 37 (expr -> POP ( ID ) .)
+    +               reduce using rule 37 (expr -> POP ( ID ) .)
+    RETURN          reduce using rule 37 (expr -> POP ( ID ) .)
+    PUSH            reduce using rule 37 (expr -> POP ( ID ) .)
+    POP             reduce using rule 37 (expr -> POP ( ID ) .)
+    PRINT           reduce using rule 37 (expr -> POP ( ID ) .)
+    ID              reduce using rule 37 (expr -> POP ( ID ) .)
+    FUNC            reduce using rule 37 (expr -> POP ( ID ) .)
+    FOREACH         reduce using rule 37 (expr -> POP ( ID ) .)
+    FOR             reduce using rule 37 (expr -> POP ( ID ) .)
+    IF              reduce using rule 37 (expr -> POP ( ID ) .)
+    $end            reduce using rule 37 (expr -> POP ( ID ) .)
+    }               reduce using rule 37 (expr -> POP ( ID ) .)
+    SMEQ            reduce using rule 37 (expr -> POP ( ID ) .)
+    GREQ            reduce using rule 37 (expr -> POP ( ID ) .)
+    SMT             reduce using rule 37 (expr -> POP ( ID ) .)
+    GRT             reduce using rule 37 (expr -> POP ( ID ) .)
+    NEQUAL          reduce using rule 37 (expr -> POP ( ID ) .)
+    EQUAL           reduce using rule 37 (expr -> POP ( ID ) .)
+    )               reduce using rule 37 (expr -> POP ( ID ) .)
+    ,               reduce using rule 37 (expr -> POP ( ID ) .)
+    TO              reduce using rule 37 (expr -> POP ( ID ) .)
+    ]               reduce using rule 37 (expr -> POP ( ID ) .)
+    {               reduce using rule 37 (expr -> POP ( ID ) .)
+
+
+state 95
+
+    (5) statement -> PUSH ( ID , expr . )
+    (45) expr -> expr . % expr
+    (46) expr -> expr . / expr
+    (47) expr -> expr . * expr
+    (48) expr -> expr . - expr
+    (49) expr -> expr . + expr
+    )               shift and go to state 104
+    %               shift and go to state 35
+    /               shift and go to state 36
+    *               shift and go to state 37
+    -               shift and go to state 38
+    +               shift and go to state 39
+
+
+state 96
+
+    (34) expr_list -> expr , expr_list .
+    )               reduce using rule 34 (expr_list -> expr , expr_list .)
+
+
+state 97
+
+    (24) var_assign -> ID ASSIGN [ list_generate ] .
+    RETURN          reduce using rule 24 (var_assign -> ID ASSIGN [ list_generate ] .)
+    PUSH            reduce using rule 24 (var_assign -> ID ASSIGN [ list_generate ] .)
+    POP             reduce using rule 24 (var_assign -> ID ASSIGN [ list_generate ] .)
+    PRINT           reduce using rule 24 (var_assign -> ID ASSIGN [ list_generate ] .)
+    ID              reduce using rule 24 (var_assign -> ID ASSIGN [ list_generate ] .)
+    FUNC            reduce using rule 24 (var_assign -> ID ASSIGN [ list_generate ] .)
+    FOREACH         reduce using rule 24 (var_assign -> ID ASSIGN [ list_generate ] .)
+    FOR             reduce using rule 24 (var_assign -> ID ASSIGN [ list_generate ] .)
+    IF              reduce using rule 24 (var_assign -> ID ASSIGN [ list_generate ] .)
+    $end            reduce using rule 24 (var_assign -> ID ASSIGN [ list_generate ] .)
+    TO              reduce using rule 24 (var_assign -> ID ASSIGN [ list_generate ] .)
+    }               reduce using rule 24 (var_assign -> ID ASSIGN [ list_generate ] .)
+
+
+state 98
+
+    (31) list_generate -> expr , . list_generate
+    (29) list_generate -> .
+    (30) list_generate -> . expr
+    (31) list_generate -> . expr , list_generate
+    (35) expr -> . ID ( expr_list )
+    (36) expr -> . LEN ( expr )
+    (37) expr -> . POP ( ID )
+    (38) expr -> . STRING
+    (39) expr -> . FLOAT
+    (40) expr -> . NUMBER
+    (41) expr -> . ID [ expr ]
+    (42) expr -> . ID
+    (43) expr -> . ( expr )
+    (44) expr -> . - expr
+    (45) expr -> . expr % expr
+    (46) expr -> . expr / expr
+    (47) expr -> . expr * expr
+    (48) expr -> . expr - expr
+    (49) expr -> . expr + expr
+    ]               reduce using rule 29 (list_generate -> .)
+    ID              shift and go to state 16
+    LEN             shift and go to state 18
+    POP             shift and go to state 19
+    STRING          shift and go to state 20
+    FLOAT           shift and go to state 21
+    NUMBER          shift and go to state 22
+    (               shift and go to state 17
+    -               shift and go to state 23
+
+    expr                           shift and go to state 77
+    list_generate                  shift and go to state 105
+
+state 99
+
+    (28) id_list -> ID , . id_list
+    (26) id_list -> .
+    (27) id_list -> . ID
+    (28) id_list -> . ID , id_list
+    )               reduce using rule 26 (id_list -> .)
+    ID              shift and go to state 80
+
+    id_list                        shift and go to state 106
+
+state 100
+
+    (10) statement -> FUNC ID ( id_list ) . { init }
+    {               shift and go to state 107
+
+
+state 101
+
+    (12) statement -> FOREACH ID IN ID { . init }
+    (1) init -> .
+    (2) init -> . statement
+    (3) init -> . init statement
+    (4) statement -> . RETURN expr
+    (5) statement -> . PUSH ( ID , expr )
+    (6) statement -> . POP ( ID )
+    (7) statement -> . var_assign
+    (8) statement -> . PRINT ( expr )
+    (9) statement -> . ID ( expr_list )
+    (10) statement -> . FUNC ID ( id_list ) { init }
+    (11) statement -> . if_else
+    (12) statement -> . FOREACH ID IN ID { init }
+    (13) statement -> . FOR var_assign TO expr { init }
+    (24) var_assign -> . ID ASSIGN [ list_generate ]
+    (25) var_assign -> . ID ASSIGN expr
+    (14) if_else -> . IF condition { init } el_if
+  ! shift/reduce conflict for RETURN resolved as shift
+  ! shift/reduce conflict for PUSH resolved as shift
+  ! shift/reduce conflict for POP resolved as shift
+  ! shift/reduce conflict for PRINT resolved as shift
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for FUNC resolved as shift
+  ! shift/reduce conflict for FOREACH resolved as shift
+  ! shift/reduce conflict for FOR resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+    }               reduce using rule 1 (init -> .)
+    RETURN          shift and go to state 3
+    PUSH            shift and go to state 4
+    POP             shift and go to state 6
+    PRINT           shift and go to state 8
+    ID              shift and go to state 5
+    FUNC            shift and go to state 9
+    FOREACH         shift and go to state 11
+    FOR             shift and go to state 12
+    IF              shift and go to state 13
+
+    init                           shift and go to state 108
+    statement                      shift and go to state 2
+    var_assign                     shift and go to state 7
+    if_else                        shift and go to state 10
+
+state 102
+
+    (13) statement -> FOR var_assign TO expr { . init }
+    (1) init -> .
+    (2) init -> . statement
+    (3) init -> . init statement
+    (4) statement -> . RETURN expr
+    (5) statement -> . PUSH ( ID , expr )
+    (6) statement -> . POP ( ID )
+    (7) statement -> . var_assign
+    (8) statement -> . PRINT ( expr )
+    (9) statement -> . ID ( expr_list )
+    (10) statement -> . FUNC ID ( id_list ) { init }
+    (11) statement -> . if_else
+    (12) statement -> . FOREACH ID IN ID { init }
+    (13) statement -> . FOR var_assign TO expr { init }
+    (24) var_assign -> . ID ASSIGN [ list_generate ]
+    (25) var_assign -> . ID ASSIGN expr
+    (14) if_else -> . IF condition { init } el_if
+  ! shift/reduce conflict for RETURN resolved as shift
+  ! shift/reduce conflict for PUSH resolved as shift
+  ! shift/reduce conflict for POP resolved as shift
+  ! shift/reduce conflict for PRINT resolved as shift
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for FUNC resolved as shift
+  ! shift/reduce conflict for FOREACH resolved as shift
+  ! shift/reduce conflict for FOR resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+    }               reduce using rule 1 (init -> .)
+    RETURN          shift and go to state 3
+    PUSH            shift and go to state 4
+    POP             shift and go to state 6
+    PRINT           shift and go to state 8
+    ID              shift and go to state 5
+    FUNC            shift and go to state 9
+    FOREACH         shift and go to state 11
+    FOR             shift and go to state 12
+    IF              shift and go to state 13
+
+    var_assign                     shift and go to state 7
+    init                           shift and go to state 109
+    statement                      shift and go to state 2
+    if_else                        shift and go to state 10
+
+state 103
+
+    (14) if_else -> IF condition { init } . el_if
+    (15) el_if -> .
+    (16) el_if -> . ELSE { init }
+    (17) el_if -> . ELSE IF condition { init } el_if
+    RETURN          reduce using rule 15 (el_if -> .)
+    PUSH            reduce using rule 15 (el_if -> .)
+    POP             reduce using rule 15 (el_if -> .)
+    PRINT           reduce using rule 15 (el_if -> .)
+    ID              reduce using rule 15 (el_if -> .)
+    FUNC            reduce using rule 15 (el_if -> .)
+    FOREACH         reduce using rule 15 (el_if -> .)
+    FOR             reduce using rule 15 (el_if -> .)
+    IF              reduce using rule 15 (el_if -> .)
+    $end            reduce using rule 15 (el_if -> .)
+    }               reduce using rule 15 (el_if -> .)
+    ELSE            shift and go to state 111
+
+    el_if                          shift and go to state 110
+
+state 104
+
+    (5) statement -> PUSH ( ID , expr ) .
+    RETURN          reduce using rule 5 (statement -> PUSH ( ID , expr ) .)
+    PUSH            reduce using rule 5 (statement -> PUSH ( ID , expr ) .)
+    POP             reduce using rule 5 (statement -> PUSH ( ID , expr ) .)
+    PRINT           reduce using rule 5 (statement -> PUSH ( ID , expr ) .)
+    ID              reduce using rule 5 (statement -> PUSH ( ID , expr ) .)
+    FUNC            reduce using rule 5 (statement -> PUSH ( ID , expr ) .)
+    FOREACH         reduce using rule 5 (statement -> PUSH ( ID , expr ) .)
+    FOR             reduce using rule 5 (statement -> PUSH ( ID , expr ) .)
+    IF              reduce using rule 5 (statement -> PUSH ( ID , expr ) .)
+    $end            reduce using rule 5 (statement -> PUSH ( ID , expr ) .)
+    }               reduce using rule 5 (statement -> PUSH ( ID , expr ) .)
+
+
+state 105
+
+    (31) list_generate -> expr , list_generate .
+    ]               reduce using rule 31 (list_generate -> expr , list_generate .)
+
+
+state 106
+
+    (28) id_list -> ID , id_list .
+    )               reduce using rule 28 (id_list -> ID , id_list .)
+
+
+state 107
+
+    (10) statement -> FUNC ID ( id_list ) { . init }
+    (1) init -> .
+    (2) init -> . statement
+    (3) init -> . init statement
+    (4) statement -> . RETURN expr
+    (5) statement -> . PUSH ( ID , expr )
+    (6) statement -> . POP ( ID )
+    (7) statement -> . var_assign
+    (8) statement -> . PRINT ( expr )
+    (9) statement -> . ID ( expr_list )
+    (10) statement -> . FUNC ID ( id_list ) { init }
+    (11) statement -> . if_else
+    (12) statement -> . FOREACH ID IN ID { init }
+    (13) statement -> . FOR var_assign TO expr { init }
+    (24) var_assign -> . ID ASSIGN [ list_generate ]
+    (25) var_assign -> . ID ASSIGN expr
+    (14) if_else -> . IF condition { init } el_if
+  ! shift/reduce conflict for RETURN resolved as shift
+  ! shift/reduce conflict for PUSH resolved as shift
+  ! shift/reduce conflict for POP resolved as shift
+  ! shift/reduce conflict for PRINT resolved as shift
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for FUNC resolved as shift
+  ! shift/reduce conflict for FOREACH resolved as shift
+  ! shift/reduce conflict for FOR resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+    }               reduce using rule 1 (init -> .)
+    RETURN          shift and go to state 3
+    PUSH            shift and go to state 4
+    POP             shift and go to state 6
+    PRINT           shift and go to state 8
+    ID              shift and go to state 5
+    FUNC            shift and go to state 9
+    FOREACH         shift and go to state 11
+    FOR             shift and go to state 12
+    IF              shift and go to state 13
+
+    init                           shift and go to state 112
+    statement                      shift and go to state 2
+    var_assign                     shift and go to state 7
+    if_else                        shift and go to state 10
+
+state 108
+
+    (12) statement -> FOREACH ID IN ID { init . }
+    (3) init -> init . statement
+    (4) statement -> . RETURN expr
+    (5) statement -> . PUSH ( ID , expr )
+    (6) statement -> . POP ( ID )
+    (7) statement -> . var_assign
+    (8) statement -> . PRINT ( expr )
+    (9) statement -> . ID ( expr_list )
+    (10) statement -> . FUNC ID ( id_list ) { init }
+    (11) statement -> . if_else
+    (12) statement -> . FOREACH ID IN ID { init }
+    (13) statement -> . FOR var_assign TO expr { init }
+    (24) var_assign -> . ID ASSIGN [ list_generate ]
+    (25) var_assign -> . ID ASSIGN expr
+    (14) if_else -> . IF condition { init } el_if
+    }               shift and go to state 113
+    RETURN          shift and go to state 3
+    PUSH            shift and go to state 4
+    POP             shift and go to state 6
+    PRINT           shift and go to state 8
+    ID              shift and go to state 5
+    FUNC            shift and go to state 9
+    FOREACH         shift and go to state 11
+    FOR             shift and go to state 12
+    IF              shift and go to state 13
+
+    statement                      shift and go to state 14
+    var_assign                     shift and go to state 7
+    if_else                        shift and go to state 10
+
+state 109
+
+    (13) statement -> FOR var_assign TO expr { init . }
+    (3) init -> init . statement
+    (4) statement -> . RETURN expr
+    (5) statement -> . PUSH ( ID , expr )
+    (6) statement -> . POP ( ID )
+    (7) statement -> . var_assign
+    (8) statement -> . PRINT ( expr )
+    (9) statement -> . ID ( expr_list )
+    (10) statement -> . FUNC ID ( id_list ) { init }
+    (11) statement -> . if_else
+    (12) statement -> . FOREACH ID IN ID { init }
+    (13) statement -> . FOR var_assign TO expr { init }
+    (24) var_assign -> . ID ASSIGN [ list_generate ]
+    (25) var_assign -> . ID ASSIGN expr
+    (14) if_else -> . IF condition { init } el_if
+    }               shift and go to state 114
+    RETURN          shift and go to state 3
+    PUSH            shift and go to state 4
+    POP             shift and go to state 6
+    PRINT           shift and go to state 8
+    ID              shift and go to state 5
+    FUNC            shift and go to state 9
+    FOREACH         shift and go to state 11
+    FOR             shift and go to state 12
+    IF              shift and go to state 13
+
+    var_assign                     shift and go to state 7
+    statement                      shift and go to state 14
+    if_else                        shift and go to state 10
+
+state 110
+
+    (14) if_else -> IF condition { init } el_if .
+    RETURN          reduce using rule 14 (if_else -> IF condition { init } el_if .)
+    PUSH            reduce using rule 14 (if_else -> IF condition { init } el_if .)
+    POP             reduce using rule 14 (if_else -> IF condition { init } el_if .)
+    PRINT           reduce using rule 14 (if_else -> IF condition { init } el_if .)
+    ID              reduce using rule 14 (if_else -> IF condition { init } el_if .)
+    FUNC            reduce using rule 14 (if_else -> IF condition { init } el_if .)
+    FOREACH         reduce using rule 14 (if_else -> IF condition { init } el_if .)
+    FOR             reduce using rule 14 (if_else -> IF condition { init } el_if .)
+    IF              reduce using rule 14 (if_else -> IF condition { init } el_if .)
+    $end            reduce using rule 14 (if_else -> IF condition { init } el_if .)
+    }               reduce using rule 14 (if_else -> IF condition { init } el_if .)
+
+
+state 111
+
+    (16) el_if -> ELSE . { init }
+    (17) el_if -> ELSE . IF condition { init } el_if
+    {               shift and go to state 115
+    IF              shift and go to state 116
+
+
+state 112
+
+    (10) statement -> FUNC ID ( id_list ) { init . }
+    (3) init -> init . statement
+    (4) statement -> . RETURN expr
+    (5) statement -> . PUSH ( ID , expr )
+    (6) statement -> . POP ( ID )
+    (7) statement -> . var_assign
+    (8) statement -> . PRINT ( expr )
+    (9) statement -> . ID ( expr_list )
+    (10) statement -> . FUNC ID ( id_list ) { init }
+    (11) statement -> . if_else
+    (12) statement -> . FOREACH ID IN ID { init }
+    (13) statement -> . FOR var_assign TO expr { init }
+    (24) var_assign -> . ID ASSIGN [ list_generate ]
+    (25) var_assign -> . ID ASSIGN expr
+    (14) if_else -> . IF condition { init } el_if
+    }               shift and go to state 117
+    RETURN          shift and go to state 3
+    PUSH            shift and go to state 4
+    POP             shift and go to state 6
+    PRINT           shift and go to state 8
+    ID              shift and go to state 5
+    FUNC            shift and go to state 9
+    FOREACH         shift and go to state 11
+    FOR             shift and go to state 12
+    IF              shift and go to state 13
+
+    statement                      shift and go to state 14
+    var_assign                     shift and go to state 7
+    if_else                        shift and go to state 10
+
+state 113
+
+    (12) statement -> FOREACH ID IN ID { init } .
+    RETURN          reduce using rule 12 (statement -> FOREACH ID IN ID { init } .)
+    PUSH            reduce using rule 12 (statement -> FOREACH ID IN ID { init } .)
+    POP             reduce using rule 12 (statement -> FOREACH ID IN ID { init } .)
+    PRINT           reduce using rule 12 (statement -> FOREACH ID IN ID { init } .)
+    ID              reduce using rule 12 (statement -> FOREACH ID IN ID { init } .)
+    FUNC            reduce using rule 12 (statement -> FOREACH ID IN ID { init } .)
+    FOREACH         reduce using rule 12 (statement -> FOREACH ID IN ID { init } .)
+    FOR             reduce using rule 12 (statement -> FOREACH ID IN ID { init } .)
+    IF              reduce using rule 12 (statement -> FOREACH ID IN ID { init } .)
+    $end            reduce using rule 12 (statement -> FOREACH ID IN ID { init } .)
+    }               reduce using rule 12 (statement -> FOREACH ID IN ID { init } .)
+
+
+state 114
+
+    (13) statement -> FOR var_assign TO expr { init } .
+    RETURN          reduce using rule 13 (statement -> FOR var_assign TO expr { init } .)
+    PUSH            reduce using rule 13 (statement -> FOR var_assign TO expr { init } .)
+    POP             reduce using rule 13 (statement -> FOR var_assign TO expr { init } .)
+    PRINT           reduce using rule 13 (statement -> FOR var_assign TO expr { init } .)
+    ID              reduce using rule 13 (statement -> FOR var_assign TO expr { init } .)
+    FUNC            reduce using rule 13 (statement -> FOR var_assign TO expr { init } .)
+    FOREACH         reduce using rule 13 (statement -> FOR var_assign TO expr { init } .)
+    FOR             reduce using rule 13 (statement -> FOR var_assign TO expr { init } .)
+    IF              reduce using rule 13 (statement -> FOR var_assign TO expr { init } .)
+    $end            reduce using rule 13 (statement -> FOR var_assign TO expr { init } .)
+    }               reduce using rule 13 (statement -> FOR var_assign TO expr { init } .)
+
+
+state 115
+
+    (16) el_if -> ELSE { . init }
+    (1) init -> .
+    (2) init -> . statement
+    (3) init -> . init statement
+    (4) statement -> . RETURN expr
+    (5) statement -> . PUSH ( ID , expr )
+    (6) statement -> . POP ( ID )
+    (7) statement -> . var_assign
+    (8) statement -> . PRINT ( expr )
+    (9) statement -> . ID ( expr_list )
+    (10) statement -> . FUNC ID ( id_list ) { init }
+    (11) statement -> . if_else
+    (12) statement -> . FOREACH ID IN ID { init }
+    (13) statement -> . FOR var_assign TO expr { init }
+    (24) var_assign -> . ID ASSIGN [ list_generate ]
+    (25) var_assign -> . ID ASSIGN expr
+    (14) if_else -> . IF condition { init } el_if
+  ! shift/reduce conflict for RETURN resolved as shift
+  ! shift/reduce conflict for PUSH resolved as shift
+  ! shift/reduce conflict for POP resolved as shift
+  ! shift/reduce conflict for PRINT resolved as shift
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for FUNC resolved as shift
+  ! shift/reduce conflict for FOREACH resolved as shift
+  ! shift/reduce conflict for FOR resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+    }               reduce using rule 1 (init -> .)
+    RETURN          shift and go to state 3
+    PUSH            shift and go to state 4
+    POP             shift and go to state 6
+    PRINT           shift and go to state 8
+    ID              shift and go to state 5
+    FUNC            shift and go to state 9
+    FOREACH         shift and go to state 11
+    FOR             shift and go to state 12
+    IF              shift and go to state 13
+
+    init                           shift and go to state 118
+    statement                      shift and go to state 2
+    var_assign                     shift and go to state 7
+    if_else                        shift and go to state 10
+
+state 116
+
+    (17) el_if -> ELSE IF . condition { init } el_if
+    (18) condition -> . expr SMEQ expr
+    (19) condition -> . expr GREQ expr
+    (20) condition -> . expr SMT expr
+    (21) condition -> . expr GRT expr
+    (22) condition -> . expr NEQUAL expr
+    (23) condition -> . expr EQUAL expr
+    (35) expr -> . ID ( expr_list )
+    (36) expr -> . LEN ( expr )
+    (37) expr -> . POP ( ID )
+    (38) expr -> . STRING
+    (39) expr -> . FLOAT
+    (40) expr -> . NUMBER
+    (41) expr -> . ID [ expr ]
+    (42) expr -> . ID
+    (43) expr -> . ( expr )
+    (44) expr -> . - expr
+    (45) expr -> . expr % expr
+    (46) expr -> . expr / expr
+    (47) expr -> . expr * expr
+    (48) expr -> . expr - expr
+    (49) expr -> . expr + expr
+    ID              shift and go to state 16
+    LEN             shift and go to state 18
+    POP             shift and go to state 19
+    STRING          shift and go to state 20
+    FLOAT           shift and go to state 21
+    NUMBER          shift and go to state 22
+    (               shift and go to state 17
+    -               shift and go to state 23
+
+    condition                      shift and go to state 119
+    expr                           shift and go to state 34
+
+state 117
+
+    (10) statement -> FUNC ID ( id_list ) { init } .
+    RETURN          reduce using rule 10 (statement -> FUNC ID ( id_list ) { init } .)
+    PUSH            reduce using rule 10 (statement -> FUNC ID ( id_list ) { init } .)
+    POP             reduce using rule 10 (statement -> FUNC ID ( id_list ) { init } .)
+    PRINT           reduce using rule 10 (statement -> FUNC ID ( id_list ) { init } .)
+    ID              reduce using rule 10 (statement -> FUNC ID ( id_list ) { init } .)
+    FUNC            reduce using rule 10 (statement -> FUNC ID ( id_list ) { init } .)
+    FOREACH         reduce using rule 10 (statement -> FUNC ID ( id_list ) { init } .)
+    FOR             reduce using rule 10 (statement -> FUNC ID ( id_list ) { init } .)
+    IF              reduce using rule 10 (statement -> FUNC ID ( id_list ) { init } .)
+    $end            reduce using rule 10 (statement -> FUNC ID ( id_list ) { init } .)
+    }               reduce using rule 10 (statement -> FUNC ID ( id_list ) { init } .)
+
+
+state 118
+
+    (16) el_if -> ELSE { init . }
+    (3) init -> init . statement
+    (4) statement -> . RETURN expr
+    (5) statement -> . PUSH ( ID , expr )
+    (6) statement -> . POP ( ID )
+    (7) statement -> . var_assign
+    (8) statement -> . PRINT ( expr )
+    (9) statement -> . ID ( expr_list )
+    (10) statement -> . FUNC ID ( id_list ) { init }
+    (11) statement -> . if_else
+    (12) statement -> . FOREACH ID IN ID { init }
+    (13) statement -> . FOR var_assign TO expr { init }
+    (24) var_assign -> . ID ASSIGN [ list_generate ]
+    (25) var_assign -> . ID ASSIGN expr
+    (14) if_else -> . IF condition { init } el_if
+    }               shift and go to state 120
+    RETURN          shift and go to state 3
+    PUSH            shift and go to state 4
+    POP             shift and go to state 6
+    PRINT           shift and go to state 8
+    ID              shift and go to state 5
+    FUNC            shift and go to state 9
+    FOREACH         shift and go to state 11
+    FOR             shift and go to state 12
+    IF              shift and go to state 13
+
+    statement                      shift and go to state 14
+    var_assign                     shift and go to state 7
+    if_else                        shift and go to state 10
+
+state 119
+
+    (17) el_if -> ELSE IF condition . { init } el_if
+    {               shift and go to state 121
+
+
+state 120
+
+    (16) el_if -> ELSE { init } .
+    RETURN          reduce using rule 16 (el_if -> ELSE { init } .)
+    PUSH            reduce using rule 16 (el_if -> ELSE { init } .)
+    POP             reduce using rule 16 (el_if -> ELSE { init } .)
+    PRINT           reduce using rule 16 (el_if -> ELSE { init } .)
+    ID              reduce using rule 16 (el_if -> ELSE { init } .)
+    FUNC            reduce using rule 16 (el_if -> ELSE { init } .)
+    FOREACH         reduce using rule 16 (el_if -> ELSE { init } .)
+    FOR             reduce using rule 16 (el_if -> ELSE { init } .)
+    IF              reduce using rule 16 (el_if -> ELSE { init } .)
+    $end            reduce using rule 16 (el_if -> ELSE { init } .)
+    }               reduce using rule 16 (el_if -> ELSE { init } .)
+
+
+state 121
+
+    (17) el_if -> ELSE IF condition { . init } el_if
+    (1) init -> .
+    (2) init -> . statement
+    (3) init -> . init statement
+    (4) statement -> . RETURN expr
+    (5) statement -> . PUSH ( ID , expr )
+    (6) statement -> . POP ( ID )
+    (7) statement -> . var_assign
+    (8) statement -> . PRINT ( expr )
+    (9) statement -> . ID ( expr_list )
+    (10) statement -> . FUNC ID ( id_list ) { init }
+    (11) statement -> . if_else
+    (12) statement -> . FOREACH ID IN ID { init }
+    (13) statement -> . FOR var_assign TO expr { init }
+    (24) var_assign -> . ID ASSIGN [ list_generate ]
+    (25) var_assign -> . ID ASSIGN expr
+    (14) if_else -> . IF condition { init } el_if
+  ! shift/reduce conflict for RETURN resolved as shift
+  ! shift/reduce conflict for PUSH resolved as shift
+  ! shift/reduce conflict for POP resolved as shift
+  ! shift/reduce conflict for PRINT resolved as shift
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for FUNC resolved as shift
+  ! shift/reduce conflict for FOREACH resolved as shift
+  ! shift/reduce conflict for FOR resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+    }               reduce using rule 1 (init -> .)
+    RETURN          shift and go to state 3
+    PUSH            shift and go to state 4
+    POP             shift and go to state 6
+    PRINT           shift and go to state 8
+    ID              shift and go to state 5
+    FUNC            shift and go to state 9
+    FOREACH         shift and go to state 11
+    FOR             shift and go to state 12
+    IF              shift and go to state 13
+
+    init                           shift and go to state 122
+    statement                      shift and go to state 2
+    var_assign                     shift and go to state 7
+    if_else                        shift and go to state 10
+
+state 122
+
+    (17) el_if -> ELSE IF condition { init . } el_if
+    (3) init -> init . statement
+    (4) statement -> . RETURN expr
+    (5) statement -> . PUSH ( ID , expr )
+    (6) statement -> . POP ( ID )
+    (7) statement -> . var_assign
+    (8) statement -> . PRINT ( expr )
+    (9) statement -> . ID ( expr_list )
+    (10) statement -> . FUNC ID ( id_list ) { init }
+    (11) statement -> . if_else
+    (12) statement -> . FOREACH ID IN ID { init }
+    (13) statement -> . FOR var_assign TO expr { init }
+    (24) var_assign -> . ID ASSIGN [ list_generate ]
+    (25) var_assign -> . ID ASSIGN expr
+    (14) if_else -> . IF condition { init } el_if
+    }               shift and go to state 123
+    RETURN          shift and go to state 3
+    PUSH            shift and go to state 4
+    POP             shift and go to state 6
+    PRINT           shift and go to state 8
+    ID              shift and go to state 5
+    FUNC            shift and go to state 9
+    FOREACH         shift and go to state 11
+    FOR             shift and go to state 12
+    IF              shift and go to state 13
+
+    statement                      shift and go to state 14
+    var_assign                     shift and go to state 7
+    if_else                        shift and go to state 10
+
+state 123
+
+    (17) el_if -> ELSE IF condition { init } . el_if
+    (15) el_if -> .
+    (16) el_if -> . ELSE { init }
+    (17) el_if -> . ELSE IF condition { init } el_if
+    RETURN          reduce using rule 15 (el_if -> .)
+    PUSH            reduce using rule 15 (el_if -> .)
+    POP             reduce using rule 15 (el_if -> .)
+    PRINT           reduce using rule 15 (el_if -> .)
+    ID              reduce using rule 15 (el_if -> .)
+    FUNC            reduce using rule 15 (el_if -> .)
+    FOREACH         reduce using rule 15 (el_if -> .)
+    FOR             reduce using rule 15 (el_if -> .)
+    IF              reduce using rule 15 (el_if -> .)
+    $end            reduce using rule 15 (el_if -> .)
+    }               reduce using rule 15 (el_if -> .)
+    ELSE            shift and go to state 111
+
+    el_if                          shift and go to state 124
+
+state 124
+
+    (17) el_if -> ELSE IF condition { init } el_if .
+    RETURN          reduce using rule 17 (el_if -> ELSE IF condition { init } el_if .)
+    PUSH            reduce using rule 17 (el_if -> ELSE IF condition { init } el_if .)
+    POP             reduce using rule 17 (el_if -> ELSE IF condition { init } el_if .)
+    PRINT           reduce using rule 17 (el_if -> ELSE IF condition { init } el_if .)
+    ID              reduce using rule 17 (el_if -> ELSE IF condition { init } el_if .)
+    FUNC            reduce using rule 17 (el_if -> ELSE IF condition { init } el_if .)
+    FOREACH         reduce using rule 17 (el_if -> ELSE IF condition { init } el_if .)
+    FOR             reduce using rule 17 (el_if -> ELSE IF condition { init } el_if .)
+    IF              reduce using rule 17 (el_if -> ELSE IF condition { init } el_if .)
+    $end            reduce using rule 17 (el_if -> ELSE IF condition { init } el_if .)
+    }               reduce using rule 17 (el_if -> ELSE IF condition { init } el_if .)
+
+
+Conflicts:
+
+shift/reduce conflict for RETURN in state 0 resolved as shift
+shift/reduce conflict for PUSH in state 0 resolved as shift
+shift/reduce conflict for POP in state 0 resolved as shift
+shift/reduce conflict for PRINT in state 0 resolved as shift
+shift/reduce conflict for ID in state 0 resolved as shift
+shift/reduce conflict for FUNC in state 0 resolved as shift
+shift/reduce conflict for FOREACH in state 0 resolved as shift
+shift/reduce conflict for FOR in state 0 resolved as shift
+shift/reduce conflict for IF in state 0 resolved as shift
+shift/reduce conflict for RETURN in state 56 resolved as shift
+shift/reduce conflict for PUSH in state 56 resolved as shift
+shift/reduce conflict for POP in state 56 resolved as shift
+shift/reduce conflict for PRINT in state 56 resolved as shift
+shift/reduce conflict for ID in state 56 resolved as shift
+shift/reduce conflict for FUNC in state 56 resolved as shift
+shift/reduce conflict for FOREACH in state 56 resolved as shift
+shift/reduce conflict for FOR in state 56 resolved as shift
+shift/reduce conflict for IF in state 56 resolved as shift
+shift/reduce conflict for % in state 63 resolved as shift
+shift/reduce conflict for / in state 63 resolved as shift
+shift/reduce conflict for * in state 63 resolved as shift
+shift/reduce conflict for - in state 63 resolved as shift
+shift/reduce conflict for + in state 63 resolved as shift
+shift/reduce conflict for RETURN in state 101 resolved as shift
+shift/reduce conflict for PUSH in state 101 resolved as shift
+shift/reduce conflict for POP in state 101 resolved as shift
+shift/reduce conflict for PRINT in state 101 resolved as shift
+shift/reduce conflict for ID in state 101 resolved as shift
+shift/reduce conflict for FUNC in state 101 resolved as shift
+shift/reduce conflict for FOREACH in state 101 resolved as shift
+shift/reduce conflict for FOR in state 101 resolved as shift
+shift/reduce conflict for IF in state 101 resolved as shift
+shift/reduce conflict for RETURN in state 102 resolved as shift
+shift/reduce conflict for PUSH in state 102 resolved as shift
+shift/reduce conflict for POP in state 102 resolved as shift
+shift/reduce conflict for PRINT in state 102 resolved as shift
+shift/reduce conflict for ID in state 102 resolved as shift
+shift/reduce conflict for FUNC in state 102 resolved as shift
+shift/reduce conflict for FOREACH in state 102 resolved as shift
+shift/reduce conflict for FOR in state 102 resolved as shift
+shift/reduce conflict for IF in state 102 resolved as shift
+shift/reduce conflict for RETURN in state 107 resolved as shift
+shift/reduce conflict for PUSH in state 107 resolved as shift
+shift/reduce conflict for POP in state 107 resolved as shift
+shift/reduce conflict for PRINT in state 107 resolved as shift
+shift/reduce conflict for ID in state 107 resolved as shift
+shift/reduce conflict for FUNC in state 107 resolved as shift
+shift/reduce conflict for FOREACH in state 107 resolved as shift
+shift/reduce conflict for FOR in state 107 resolved as shift
+shift/reduce conflict for IF in state 107 resolved as shift
+shift/reduce conflict for RETURN in state 115 resolved as shift
+shift/reduce conflict for PUSH in state 115 resolved as shift
+shift/reduce conflict for POP in state 115 resolved as shift
+shift/reduce conflict for PRINT in state 115 resolved as shift
+shift/reduce conflict for ID in state 115 resolved as shift
+shift/reduce conflict for FUNC in state 115 resolved as shift
+shift/reduce conflict for FOREACH in state 115 resolved as shift
+shift/reduce conflict for FOR in state 115 resolved as shift
+shift/reduce conflict for IF in state 115 resolved as shift
+shift/reduce conflict for RETURN in state 121 resolved as shift
+shift/reduce conflict for PUSH in state 121 resolved as shift
+shift/reduce conflict for POP in state 121 resolved as shift
+shift/reduce conflict for PRINT in state 121 resolved as shift
+shift/reduce conflict for ID in state 121 resolved as shift
+shift/reduce conflict for FUNC in state 121 resolved as shift
+shift/reduce conflict for FOREACH in state 121 resolved as shift
+shift/reduce conflict for FOR in state 121 resolved as shift
+shift/reduce conflict for IF in state 121 resolved as shift
