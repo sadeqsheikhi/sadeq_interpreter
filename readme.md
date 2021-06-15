@@ -1,4 +1,4 @@
-#Sadeq Interpreter
+# Sadeq Interpreter
 An interpreter for a mini functional language written in python
 
 It's implemented based on **`sly`** library.
