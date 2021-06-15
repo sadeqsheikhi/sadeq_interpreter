@@ -1,7 +1,6 @@
 # Sadeq Interpreter
-An interpreter for a mini functional language written in python
+An interpreter for a mini functional language implemented in python and **`sly`** library
 
-It's implemented based on **`sly`** library.
 ## features
 This language supports:
 data types: int, float, string, list
